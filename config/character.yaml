@@ -1,0 +1,55 @@
+define:
+  &colors [
+    aqua,
+    black,
+    blue,
+    brown,
+    green,
+    grey,
+    orange,
+    pink,
+    purple,
+    red,
+    white,
+    yellow,
+  ]
+
+body:
+  colors: [dark:2, black, red, green, blue, purple, pink]
+  types: [petite, slim, athletic, curvy, muscular, chubby, fat]
+  breasts:
+    sizes:
+      [flat chest, small breasts, medium breasts, large breasts, huge breasts]
+    nipples: [nipples, dark nipples, puffy nipples]
+  extras:
+    probability: 0.9
+    repeat: [1, 2]
+    types: [freckles:2, tattoos, piercings, scars, birthmarks, moles]
+
+hair:
+  colors:
+    [
+      black:2,
+      brown:2,
+      blonde:2,
+      ginger:2,
+      red,
+      white,
+      blue,
+      aqua,
+      green,
+      grey,
+      silver,
+      pink,
+      purple,
+    ]
+  lengths: [short, medium, long, very long]
+  appearances: [curly, straight, wavy]
+  styles: [ponytail, bun, braid, pigtails]
+
+eyes:
+  colors: *colors
+  eyewears:
+    probability: 0.3
+    types: [glasses, sunglasses, googles]
+    colors: *colors

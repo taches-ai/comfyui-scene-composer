@@ -1,0 +1,33 @@
+prefix: [score_9, score_8_up, score_7_up, source_anime]
+camera:
+  angles: [from above, from below, from side, from behind, straight on, pov]
+  framings: [close-up, portrait, upper body, full body]
+protagonists:
+  - 1girl, solo
+  - 1girl, 1boy, solo focus
+
+actions:
+  normal:
+    position: [standing, sitting, walking, running]
+    motion:
+      gesture: [waving, pointing, adjusting hair]
+      interaction: [holding hand]
+      activity: [drinking, reading]
+
+  sexual:
+    preliminary:
+      masturbation: [fingering]
+      handjob: [handjob]
+      fellatio:
+        [fellatio, irrumatio, deepthroat, surprise deepthroat, licking penis]
+      paizuri: [paizuri]
+    main:
+      doggystyle:
+        [doggystyle, top-down bottom-up, face down, prone bone, bent over]
+      cowgirl: [girl on top]
+      standing-sex: [standing sex]
+      piledriver: [pilediver]
+    finisher:
+      cum: [cum]
+
+negative: [score_6, score_5, score_4]

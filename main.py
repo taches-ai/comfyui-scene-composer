@@ -4,40 +4,25 @@ import yaml
 import random
 
 from src.scene import Scene
+from src.data import Data
+from src.character.character import Character
 
 
 def main():
 
     # Settings
     config_path = "config"
-    seed = random.randint(0, 1000)
+    seed = 542
     print(f"Seed: {seed}")
-
-    data = merge_config_files(config_path)
-    scene = Scene(data, seed)
-
-    # Output
-    scene.define_action("normal")
-    print(scene.components["composition"].action)
-    scene.define_action("sexual.preliminary")
-    print(scene.components["composition"].action)
+    data = Data(path="config", seed=seed)
+    scene = Scene(data)
+    scene.define_action("sexual.preliminary.masturbation")
+    print(scene.get_prompt())
+    print("")
+    data.set_random_data(145)
+    print(scene.get_prompt())
 
 
-def merge_config_files(path):
-    """Merge all yaml files in a directory into a single dictionary"""
-    config_files = [f for f in os.listdir(path) if f.endswith('.yaml')]
-    merged_data = {}
-    for file in config_files:
-        file_path = os.path.join(path, file)
-        file_name = os.path.splitext(file)[0]
-        try:
-            with open(file_path, 'r') as f:
-                data = yaml.safe_load(f)
-                if data is not None:
-                    merged_data[file_name] = data
-        except Exception as e:
-            print(f"Error reading {file_path}: {e}")
-    return merged_data
 
 
 if __name__ == "__main__":

@@ -7,9 +7,8 @@ class Component():
     Will build and return a prompt according to other sub-components.
     """
 
-    def __init__(self, data, seed):
+    def __init__(self, data):
         self.data = data
-        self.seed = seed
         self.components = {}
         self.prompt = []
 

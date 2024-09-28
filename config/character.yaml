@@ -52,4 +52,5 @@ eyes:
   eyewears:
     probability: 0.3
     types: [glasses, sunglasses, googles]
+    colored_element: ["framed", "tinted"]
     colors: *colors

@@ -5,15 +5,18 @@ from src.utils import stringify_tags
 
 
 class Composition(Component):
-    def __init__(self, data, seed):
-        super().__init__(data, seed)
-        self.action = Action(self.data["actions"], self.seed)
+    def __init__(self, data):
+        super().__init__(data)
+        prefix = self.data.data["composition"]["prefix"]
+        composition = self.data.random_data["composition"]
+        camera = composition["camera"]
+        self.action = Action(data)
         self.components = {
-            'prefix': stringify_tags(self.data["prefix"]),
+            'prefix': stringify_tags(prefix),
             'camera': stringify_tags([
-                self.select_tags(self.data["camera"]["angles"]),
-                self.select_tags(self.data["camera"]["framings"])
+                stringify_tags(camera["angles"]),
+                stringify_tags(camera["framings"])
             ]),
-            'protagonists': self.select_tags(self.data["protagonists"]),
+            'protagonists': stringify_tags(composition["protagonists"]),
             'action': self.action
         }

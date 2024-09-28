@@ -8,10 +8,13 @@ from src.utils import stringify_tags, is_true
 
 
 class Data:
-    def __init__(self, path, seed):
-        self.data = self.merge_config_data(path)
-        self.seed = seed
-        self.random_data = {}
+    def __init__(self, path="", seed=1, data=None):
+        if data is not None:
+            self.data = data
+        else:
+            self.data = self.merge_config_data(path)
+        self.set_seed(seed)
+        self.set_random_data()
 
     def merge_config_data(self, path):
         """Merge all yaml files in a directory into a single dictionary"""
@@ -29,7 +32,12 @@ class Data:
                 print(f"Error reading {file_path}: {e}")
         return merged_data
     
-    def set_random_data(self):
+    def set_seed(self, seed):
+        self.seed = seed
+
+    def set_random_data(self, seed=None):
+        if seed is not None:
+            self.seed = seed
         self.random_data = self.select_random_dictionary_tags(self.data)
         return self.random_data
 

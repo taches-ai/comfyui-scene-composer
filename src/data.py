@@ -113,7 +113,7 @@ class Data:
             return list(set(group_a)|set(group_b))
         if isinstance(group_a, dict) and isinstance(group_b, dict):
             keys = list(set(group_a.keys())|set(group_b.keys()))
-            return dict(map(lambda key: 
+            return dict(map(lambda key:
                 (key, self.union(group_a.get(key), group_b.get(key))),
                 keys))
         if group_a is None:

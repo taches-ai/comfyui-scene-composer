@@ -12,14 +12,78 @@ def main():
 
     # Settings
     config_path = "config"
-    seed = 542
+    seed = random.randint(0, 1000)
     print(f"Seed: {seed}")
+
     data = Data(path="config", seed=seed)
     scene = Scene(data)
-    scene.define_action("sexual.preliminary.masturbation")
+
+    scene.define_action("normal")
     print(scene.get_prompt())
     print("")
-    data.set_random_data(145)
+
+    sexual_acts = data.random_data["composition"]["actions"]["sexual"]
+    scene.define_action("sexual")
+
+    if "masturbation" in sexual_acts:
+        data.random_data_union({
+            "composition": {
+                "actions": {
+                    "sexual":
+                        ["fingering"]
+                }
+            }
+        })
+    if "handjob" in sexual_acts:
+        data.random_data_union({
+            "composition": {
+                "protagonists": ["1boy"],
+                "actions": {
+                    "sexual": 
+                        ["caressing testicles"]
+                }
+            }
+        })
+    if "fellatio" in sexual_acts:
+        data.random_data_union({
+            "composition": {
+                "protagonists": ["1boy"],
+                "actions": {
+                    "sexual":
+                        ["deepthroat"]
+                }
+            }
+        })
+    if "paizuri" in sexual_acts:
+        data.random_data_union({
+            "composition": {
+                "protagonists": ["1boy"],
+                "actions": {
+                    "sexual": 
+                        ["straddling paizuri"]
+                }
+            }
+        })
+    if "doggystyle" in sexual_acts:
+        data.random_data_union({
+            "composition": {
+                "protagonists": ["2boy"],
+                "actions": {
+                    "sexual":
+                        ["double penetration"]
+                }
+            }
+        })
+    if "standing_sex" in sexual_acts:
+        data.random_data_union({
+            "composition": {
+                "protagonists": ["2boy"],
+                "actions": {
+                    "sexual":
+                        ["anal sex"]
+                }
+            }
+        })
     print(scene.get_prompt())
 
 

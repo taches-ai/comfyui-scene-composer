@@ -28,6 +28,7 @@ def main():
     if "masturbation" in sexual_acts:
         data.random_data_union({
             "composition": {
+                "protagonists": ["1girl"],
                 "actions": {
                     "sexual":
                         ["fingering"]
@@ -37,7 +38,7 @@ def main():
     if "handjob" in sexual_acts:
         data.random_data_union({
             "composition": {
-                "protagonists": ["1boy"],
+                "protagonists": ["1girl", "1boy"],
                 "actions": {
                     "sexual": 
                         ["caressing testicles"]
@@ -47,7 +48,7 @@ def main():
     if "fellatio" in sexual_acts:
         data.random_data_union({
             "composition": {
-                "protagonists": ["1boy"],
+                "protagonists": ["1girl", "1boy"],
                 "actions": {
                     "sexual":
                         ["deepthroat"]
@@ -57,7 +58,7 @@ def main():
     if "paizuri" in sexual_acts:
         data.random_data_union({
             "composition": {
-                "protagonists": ["1boy"],
+                "protagonists": ["1girl", "1boy"],
                 "actions": {
                     "sexual": 
                         ["straddling paizuri"]
@@ -67,7 +68,7 @@ def main():
     if "doggystyle" in sexual_acts:
         data.random_data_union({
             "composition": {
-                "protagonists": ["2boy"],
+                "protagonists": ["1girl", "2boy"],
                 "actions": {
                     "sexual":
                         ["double penetration"]
@@ -77,7 +78,7 @@ def main():
     if "standing_sex" in sexual_acts:
         data.random_data_union({
             "composition": {
-                "protagonists": ["2boy"],
+                "protagonists": ["1girl", "1boy"],
                 "actions": {
                     "sexual":
                         ["anal sex"]

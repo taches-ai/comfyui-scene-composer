@@ -13,7 +13,6 @@ class Composition(Component):
         camera = composition["camera"]
         self.action = Action(data)
         self.protagonists = Protagonists(data)
-        print(composition["protagonists"])
         self.components = {
             'prefix': stringify_tags(prefix),
             'camera': stringify_tags([

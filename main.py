@@ -24,7 +24,7 @@ def main():
     print("")
     
     scene_2.define_action("normal")
-    print(scene.get_prompt())
+    print(scene_2.get_prompt())
     print("")
 
     sexual_acts = data.random_data["composition"]["actions"]["sexual"]

@@ -17,8 +17,13 @@ def main():
 
     data = Data(path="config", seed=seed)
     scene = Scene(data)
+    scene_2 = Scene(data)
 
     scene.define_action("normal")
+    print(scene.get_prompt())
+    print("")
+    
+    scene_2.define_action("normal")
     print(scene.get_prompt())
     print("")
 

@@ -38,10 +38,12 @@ class Data:
     def set_random_data(self, seed=None):
         if seed is not None:
             self.seed = seed
+        self.temp_seed = self.seed
         self.random_data = self.select_random_dictionary_tags(self.data)
         return self.random_data
 
     def select_random_dictionary_tags(self, tags, n=1, p=1):
+        self.temp_seed += 1
         if isinstance(tags, dict):
             if "repeat" in tags:
                 n = tags["repeat"]
@@ -51,7 +53,7 @@ class Data:
                 tags.pop("probability")
             if "define" in tags:
                 tags.pop("define")
-            return dict(map(lambda key: 
+            return dict(map(lambda key:
                 (key, self.select_random_dictionary_tags(tags[key], n, p)),
                 tags.keys()))
         if isinstance(tags, list):
@@ -61,10 +63,10 @@ class Data:
         """Return a random number of n tags from a list.
         The probability of returning an empty string is defined by p."""
 
-        rng = np.random.default_rng(self.seed)
+        rng = np.random.default_rng(self.temp_seed)
 
         # Probability to keep the tags
-        if not is_true(self.seed, p):
+        if not is_true(self.temp_seed, p):
             return ""
 
         # Recursive selection of tags

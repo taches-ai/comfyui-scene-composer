@@ -1,4 +1,5 @@
 from src.components import Component
+from src.utils import search_dict
 
 
 class Action(Component):
@@ -8,13 +9,6 @@ class Action(Component):
         self.type = ""
 
     def build_prompt(self):
-        keys = self.type.split('.')
-        data = self.data
-        for key in keys:
-            if data is None or key not in data:
-                raise KeyError(f"Key '{key}' not found in data")
-            data = data[key]
-
+        data = search_dict(self.data, self.type)
         action = self.select_tags(data)
-        
         self.prompt = [action]

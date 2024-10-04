@@ -1,15 +1,17 @@
 from src.components import Component
-
+from src.utils import stringify_tags
 
 class Hair(Component):
+    def __init__(self, data):
+        super().__init__(data)
 
     def build_prompt(self):
         suffix = "hair"
 
-        color = self.select_tags(self.data["colors"])
-        length = self.select_tags(self.data["lengths"])
-        appearance = self.select_tags(self.data["appearances"])
-        style = self.select_tags(self.data["styles"])
+        color = stringify_tags(self.data.random_data["character"]["hair"]["colors"])
+        length = stringify_tags(self.data.random_data["character"]["hair"]["lengths"])
+        appearance = stringify_tags(self.data.random_data["character"]["hair"]["appearances"])
+        style = stringify_tags(self.data.random_data["character"]["hair"]["styles"])
 
         self.prompt = [
             f"{color} {suffix}",

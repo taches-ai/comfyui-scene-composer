@@ -1,20 +1,22 @@
 from src.components import Component
 from src.character.clothes.piece import Piece
+from src.utils import stringify_tags
 
 
 class Clothes(Component):
 
-    def __init__(self, data, seed):
-        super().__init__(data, seed)
-        self.components = {
-            'vest': Piece(self.data["vest"], self.seed),
-            'top': Piece(self.data["top"], self.seed),
-            'bottom': Piece(self.data["bottom"], self.seed)
-        }
+    def __init__(self, data):
+        super().__init__(data)
 
     def build_prompt(self):
+        vest_type = stringify_tags(self.data.random_data["clothes"]["vest"]["types"])
+        vest_color = stringify_tags(self.data.random_data["clothes"]["vest"]["colors"])
+        top_type = stringify_tags(self.data.random_data["clothes"]["top"]["types"])
+        top_color = stringify_tags(self.data.random_data["clothes"]["top"]["colors"])
+        bottom_type = stringify_tags(self.data.random_data["clothes"]["bottom"]["types"])
+        bottom_color = stringify_tags(self.data.random_data["clothes"]["bottom"]["colors"])
         self.prompt = [
-            self.components["vest"],
-            self.components["top"],
-            self.components["bottom"]
+            f"{vest_color} {vest_type}",
+            f"{top_color} {top_type}",
+            f"{bottom_color} {bottom_type}"
         ]

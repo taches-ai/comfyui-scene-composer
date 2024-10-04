@@ -2,9 +2,9 @@ from src.components import Component
 
 
 class Environment(Component):
-    def build_prompt(self):
-        time = self.select_tags(self.data["time"])
-        weather = self.select_tags(self.data["weather"])
-        location = self.select_tags(self.data["locations"])
+    def __init__(self, data):
+        super().__init__(data)
 
-        self.prompt = [time, weather, location]
+    def build_prompt(self):
+        environment = self.data.random_data["environment"]
+        self.prompt = environment["time"] + environment["weather"] + environment["locations"]

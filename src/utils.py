@@ -2,6 +2,8 @@ import numpy as np
 
 
 def stringify_tags(tags):
+    if isinstance(tags, str):
+        return tags
     tags = ", ".join(map(str, tags))
     tags = tags.replace(", ,", ",")
     return tags

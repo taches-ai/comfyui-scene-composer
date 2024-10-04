@@ -5,18 +5,12 @@ from src.environment.environment import Environment
 
 
 class Scene(Component):
-    def __init__(self, data, seed=None):
-        super().__init__(data, seed)
-
+    def __init__(self, data):
+        super().__init__(data)
         self.components = {
-            'composition': Composition(self.data["composition"], self.seed),
-            'character': Character(
-                {
-                    'character': data["character"],
-                    'clothes': data["clothes"]
-                },
-                self.seed),
-            'environment': Environment(self.data["environment"], self.seed)
+            'composition': Composition(data),
+            'character': Character(data),
+            'environment': Environment(data)
         }
 
     def define_action(self, action):

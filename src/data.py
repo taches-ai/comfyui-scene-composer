@@ -34,10 +34,11 @@ class Data:
     
     def set_seed(self, seed):
         self.seed = seed
+        self.temp_seed = seed
 
     def set_random_data(self, seed=None):
         if seed is not None:
-            self.seed = seed
+            self.set_seed(seed)
         self.temp_seed = self.seed
         self.random_data = self.select_random_dictionary_tags(self.data)
         return self.random_data
@@ -67,7 +68,7 @@ class Data:
 
         # Probability to keep the tags
         if not is_true(self.temp_seed, p):
-            return ""
+            return [""]
 
         # Recursive selection of tags
         if isinstance(tags, dict):

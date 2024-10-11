@@ -15,3 +15,6 @@ class Scene(Component):
             'subject': Character(self.seed),
             'environment': Environment(self.seed)
         }
+
+    def define_action(self, action_type):
+        self.components['action'] = Action(self.seed, action_type)

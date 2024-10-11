@@ -5,7 +5,7 @@ gesture = ["waving", "pointing", "adjusting hair"]
 interaction = ["holding hand"]
 activity = ["drinking", "reading"]
 
-[sexual.preliminary]
+[preliminary]
 list = ["masturbation", "handjob", "paizuri", "fellatio"]
 masturbation = ["fingering"]
 handjob = ["handjob"]
@@ -18,7 +18,7 @@ fellatio = [
   "licking penis",
 ]
 
-[sexual.main]
+[main]
 doggystyle = [
   "doggystyle",
   "top-down bottom-up",
@@ -30,5 +30,5 @@ cowgirl = ["girl on top"]
 standing-sex = ["standing sex"]
 piledriver = ["pilediver"]
 
-[sexual.finisher]
+[finisher]
 cum = ["cum"]

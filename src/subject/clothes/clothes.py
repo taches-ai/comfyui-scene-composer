@@ -1,5 +1,5 @@
 from node import Node
-from src.subject.clothes.piece import Piece
+from piece import Piece
 
 
 class Clothes(Node):

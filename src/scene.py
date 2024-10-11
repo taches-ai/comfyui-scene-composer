@@ -6,16 +6,16 @@ from .environment.environment import Environment
 
 
 class Scene(Node):
-    def __init__(self, seed=None):
-        super().__init__(seed)
+    def __init__(self):
+        super().__init__()
         self.data = ""
 
         self.components = {
-            'composition': Composition(self.seed),
-            'action': Action(self.seed),
-            'subject': Character(self.seed),
-            'environment': Environment(self.seed)
+            'composition': Composition(),
+            'action': Action(),
+            'subject': Character(),
+            'environment': Environment()
         }
 
     def define_action(self, action_type):
-        self.components['action'] = Action(self.seed, action_type)
+        self.components['action'] = Action(type=action_type)

@@ -4,8 +4,8 @@ from ..utils import is_true
 
 class Eyes(Node):
 
-    def __init__(self, seed):
-        super().__init__(seed, data_file="character.toml")
+    def __init__(self):
+        super().__init__(data_file="character.toml")
         self.data = self.data["eyes"]
 
     def build_prompt(self):

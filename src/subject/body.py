@@ -3,12 +3,12 @@ from ..node import Node
 
 class Body(Node):
 
-    def __init__(self, seed):
-        super().__init__(seed, data_file="character.toml")
+    def __init__(self):
+        super().__init__(data_file="character.toml")
         self.data = self.data["body"]
 
         self.components = {
-            'breasts': Breasts(self.seed)
+            'breasts': Breasts()
         }
 
     def build_prompt(self):
@@ -30,8 +30,8 @@ class Body(Node):
 
 class Breasts(Node):
 
-    def __init__(self, seed):
-        super().__init__(seed, data_file="character.toml")
+    def __init__(self):
+        super().__init__(data_file="character.toml")
         self.data = self.data["body"]["breasts"]
 
     def build_prompt(self):

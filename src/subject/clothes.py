@@ -3,12 +3,12 @@ from ..node import Node
 
 class Clothes(Node):
 
-    def __init__(self, seed):
-        super().__init__(seed)
+    def __init__(self):
+        super().__init__()
         self.components = {
-            'vest': Piece(self.seed+1, "vest"),
-            'top': Piece(self.seed+2, "top"),
-            'bottom': Piece(self.seed+3, "bottom")
+            'vest': Piece("vest", self.seed+1),
+            'top': Piece("top", self.seed+2),
+            'bottom': Piece("bottom", self.seed+3)
         }
 
     def build_prompt(self):
@@ -21,8 +21,9 @@ class Clothes(Node):
 
 class Piece(Node):
 
-    def __init__(self, seed, type):
-        super().__init__(seed, data_file="clothes.toml")
+    def __init__(self, type, seed_modifier):
+        super().__init__(data_file="clothes.toml")
+        self.seed = self.seed + seed_modifier
         self.data = self.data[type]
 
     def build_prompt(self):

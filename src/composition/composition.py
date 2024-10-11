@@ -3,8 +3,8 @@ from ..node import Node
 
 class Composition(Node):
 
-    def __init__(self):
-        super().__init__(data_file="composition.toml")
+    def __init__(self, seed):
+        super().__init__(seed, data_file="composition.toml")
 
         self.components = {
             'prefix': self.select_tags(self.data["prefix"]),

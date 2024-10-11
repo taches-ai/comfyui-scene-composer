@@ -6,14 +6,14 @@ from .environment.environment import Environment
 
 
 class Scene(Node):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, seed=0):
+        super().__init__(seed)
 
         self.components = {
-            'composition': Composition(),
-            'action': Action(),
-            'subject': Character(),
-            'environment': Environment()
+            'composition': Composition(self.seed),
+            'action': Action(self.seed),
+            'subject': Character(self.seed),
+            'environment': Environment(self.seed)
         }
 
     def define_action(self, action_type):

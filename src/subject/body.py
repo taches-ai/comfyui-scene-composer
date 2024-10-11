@@ -3,8 +3,8 @@ from ..node import Node
 
 class Body(Node):
 
-    def __init__(self):
-        super().__init__(data_file="character.toml")
+    def __init__(self, seed):
+        super().__init__(seed, data_file="character.toml")
         self.data = self.data["body"]
 
         self.components = {

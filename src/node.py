@@ -9,11 +9,13 @@ class Node:
     Will build and return a prompt according to other sub-components.
     """
 
-    def __init__(self, data_file=""):
+    def __init__(self, seed=0, data_file=""):
+        self.seed = seed
+
         self.data_file = data_file
         self.data_path = f"{ROOT_DIR}/config/{self.data_file}"
         self.data = self.load_data(self.data_path)
-        self.seed = 0
+
         self.components = {}
         self.prompt = []
 
@@ -38,8 +40,7 @@ class Node:
                        for component in self.components]
 
     def select_tags(self, tags, p=1, n=1):
-        """Return a random number of n tags from a list.
-        The probability of returning an empty string is defined by p."""
+        """Return n tags from a string, list or dict"""
 
         rng = np.random.default_rng(self.seed)
 

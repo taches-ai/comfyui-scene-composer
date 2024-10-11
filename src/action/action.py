@@ -3,8 +3,8 @@ from ..node import Node
 
 class Action(Node):
 
-    def __init__(self, type="normal"):
-        super().__init__(data_file="actions.toml")
+    def __init__(self, seed, type="normal"):
+        super().__init__(seed, data_file="actions.toml")
         self.type = type
 
     def build_prompt(self):

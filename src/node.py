@@ -1,14 +1,18 @@
 import numpy as np
 import toml
 
+from .utils import ROOT_DIR
 
-class Component():
-    """Component of a scene.
+
+class Node:
+    """ComfyUI Node parent class
     Will build and return a prompt according to other sub-components.
     """
 
-    def __init__(self, seed):
-        self.data = None
+    def __init__(self, seed=None, data_file=""):
+        self.data_file = data_file
+        self.data_path = f"{ROOT_DIR}/config/{self.data_file}"
+        self.data = self.load_data(self.data_path)
         self.seed = seed
         self.components = {}
         self.prompt = []
@@ -17,13 +21,11 @@ class Component():
     def INPUT_TYPES(cls):
         """ComfyUI node inputs"""
         required = {
-            "seed": (
-                "INT", {
-                    "default": 0,
-                    "min": 0,
-                    "max": 0xffffffffffffffff
-                }
-            )
+            "seed": ("INT", {
+                "default": 0,
+                "min": 0,
+                "max": 0xffffffffffffffff
+            })
         },
         optional = {}
         inputs = {
@@ -33,15 +35,22 @@ class Component():
         return inputs
 
     # ComfyUI specifics
-    RETURN_TYPES = {"STRING"}
-    RETURN_NAMES = {"string"}
-    FUNCTION = "get_prompt"
+    RETURN_TYPES = ("STRING",)
+    FUNCTION = "build_node"
     CATEGORY = "Scene Composer"
+
+    def build_node(self, seed):
+        self.seed = seed
+        prompt = self.get_prompt()
+        return (prompt,)
 
     def load_data(self, path):
         """Load data from a TOML file"""
-        with open(path) as file:
-            data = toml.load(file)
+        try:
+            with open(path) as file:
+                data = toml.load(file)
+        except Exception:
+            data = {}
         return data
 
     def get_prompt(self):

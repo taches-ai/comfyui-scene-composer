@@ -1,11 +1,10 @@
-from ..scene.component import Component
+from ..node import Node
 
 
-class Composition(Component):
+class Composition(Node):
 
     def __init__(self, seed):
-        super().__init__(seed)
-        self.data = self.load_data("config/composition.toml")
+        super().__init__(seed, data_file="composition.toml")
 
         self.components = {
             'prefix': self.select_tags(self.data["prefix"]),

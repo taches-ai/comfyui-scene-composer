@@ -1,11 +1,10 @@
-from ..scene.component import Component
+from ..node import Node
 
 
-class Environment(Component):
+class Environment(Node):
 
     def __init__(self, seed):
-        super().__init__(seed)
-        self.data = self.load_data("config/environment.toml")
+        super().__init__(seed, data_file="environment.toml")
 
     def build_prompt(self):
         time = self.select_tags(self.data["time"])

@@ -1,7 +1,7 @@
-from ..scene.component import Component
+from ..node import Node
 
 
-class Clothes(Component):
+class Clothes(Node):
 
     def __init__(self, seed):
         super().__init__(seed)
@@ -19,11 +19,11 @@ class Clothes(Component):
         ]
 
 
-class Piece(Component):
+class Piece(Node):
 
     def __init__(self, seed, type):
-        super().__init__(seed)
-        self.data = self.load_data("config/clothes.toml")[type]
+        super().__init__(seed, data_file="clothes.toml")
+        self.data = self.data[type]
 
     def build_prompt(self):
         type = self.select_tags(self.data["types"])

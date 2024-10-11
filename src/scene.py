@@ -1,13 +1,14 @@
-from ..scene.component import Component
-from ..composition.composition import Composition
-from ..action.action import Action
-from ..subject.character import Character
-from ..environment.environment import Environment
+from .node import Node
+from .composition.composition import Composition
+from .action.action import Action
+from .subject.character import Character
+from .environment.environment import Environment
 
 
-class Scene(Component):
+class Scene(Node):
     def __init__(self, seed=None):
         super().__init__(seed)
+        self.data = ""
 
         self.components = {
             'composition': Composition(self.seed),

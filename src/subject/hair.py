@@ -1,11 +1,11 @@
-from ..scene.component import Component
+from ..node import Node
 
 
-class Hair(Component):
+class Hair(Node):
 
     def __init__(self, seed):
-        super().__init__(seed)
-        self.data = self.load_data("config/character.toml")["hair"]
+        super().__init__(seed, data_file="character.toml")
+        self.data = self.data["hair"]
 
     def build_prompt(self):
         suffix = "hair"

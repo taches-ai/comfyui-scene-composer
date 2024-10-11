@@ -1,11 +1,11 @@
-from ..scene.component import Component
+from ..node import Node
 
 
-class Body(Component):
+class Body(Node):
 
     def __init__(self, seed):
-        super().__init__(seed)
-        self.data = self.load_data("config/character.toml")["body"]
+        super().__init__(seed, data_file="character.toml")
+        self.data = self.data["body"]
 
         self.components = {
             'breasts': Breasts(self.seed)
@@ -28,11 +28,11 @@ class Body(Component):
         return extras_prompt
 
 
-class Breasts(Component):
+class Breasts(Node):
 
     def __init__(self, seed):
-        super().__init__(seed)
-        self.data = self.load_data("config/character.toml")["body"]["breasts"]
+        super().__init__(seed, data_file="character.toml")
+        self.data = self.data["body"]["breasts"]
 
     def build_prompt(self):
         size = self.select_tags(self.data["sizes"])

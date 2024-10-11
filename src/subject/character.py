@@ -1,4 +1,4 @@
-from ..scene.component import Component
+from ..node import Node
 
 from ..subject.body import Body
 from ..subject.hair import Hair
@@ -6,7 +6,7 @@ from ..subject.eyes import Eyes
 from ..subject.clothes import Clothes
 
 
-class Character(Component):
+class Character(Node):
 
     def __init__(self, seed):
         super().__init__(seed)

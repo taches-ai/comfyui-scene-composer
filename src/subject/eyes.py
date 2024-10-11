@@ -1,12 +1,12 @@
-from ..scene.component import Component
+from ..node import Node
 from ..utils import is_true
 
 
-class Eyes(Component):
+class Eyes(Node):
 
     def __init__(self, seed):
-        super().__init__(seed)
-        self.data = self.load_data("config/character.toml")["eyes"]
+        super().__init__(seed, data_file="character.toml")
+        self.data = self.data["eyes"]
 
     def build_prompt(self):
         suffix = "eyes"

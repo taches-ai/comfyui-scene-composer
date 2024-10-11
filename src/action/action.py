@@ -1,11 +1,10 @@
-from ..scene.component import Component
+from ..node import Node
 
 
-class Action(Component):
+class Action(Node):
 
     def __init__(self, seed, type="normal"):
-        super().__init__(seed)
-        self.data = self.load_data("config/actions.toml")[type]
+        super().__init__(seed, data_file="actions.toml")
         self.type = type
 
     def build_prompt(self):

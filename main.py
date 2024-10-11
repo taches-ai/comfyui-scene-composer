@@ -1,5 +1,5 @@
 import random
-from src.scene.scene import Scene
+from src.scene import Scene
 
 
 def main():

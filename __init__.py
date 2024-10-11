@@ -1,9 +1,8 @@
-from .src.scene.scene import Scene
+from .src.scene import Scene
 from .src.composition.composition import Composition
 from .src.action.action import Action
 from .src.subject.character import Character
 from .src.environment.environment import Environment
-
 
 NODE_CLASS_MAPPINGS = {
     "Scene": Scene,

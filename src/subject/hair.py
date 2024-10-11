@@ -1,4 +1,4 @@
-from src.scene.component import Component
+from ..scene.component import Component
 
 
 class Hair(Component):

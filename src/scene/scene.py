@@ -1,8 +1,8 @@
-from src.scene.component import Component
-from src.composition.composition import Composition
-from src.action.action import Action
-from src.subject.character import Character
-from src.environment.environment import Environment
+from ..scene.component import Component
+from ..composition.composition import Composition
+from ..action.action import Action
+from ..subject.character import Character
+from ..environment.environment import Environment
 
 
 class Scene(Component):

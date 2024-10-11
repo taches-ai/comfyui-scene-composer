@@ -1,9 +1,9 @@
-from src.scene.component import Component
+from ..scene.component import Component
 
-from src.subject.body import Body
-from src.subject.hair import Hair
-from src.subject.eyes import Eyes
-from src.subject.clothes import Clothes
+from ..subject.body import Body
+from ..subject.hair import Hair
+from ..subject.eyes import Eyes
+from ..subject.clothes import Clothes
 
 
 class Character(Component):

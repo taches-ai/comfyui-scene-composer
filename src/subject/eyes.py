@@ -1,5 +1,5 @@
-from src.scene.component import Component
-from src.utils import is_true
+from ..scene.component import Component
+from ..utils import is_true
 
 
 class Eyes(Component):

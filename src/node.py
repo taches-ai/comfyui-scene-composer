@@ -116,7 +116,7 @@ class Node:
                 "min": 0,
                 "max": 0xffffffffffffffff
             })
-        },
+        }
         optional = {}
         inputs = {
             "required": required,

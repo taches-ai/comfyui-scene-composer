@@ -8,7 +8,6 @@ from .environment.environment import Environment
 class Scene(Node):
     def __init__(self):
         super().__init__()
-        self.data = ""
 
         self.components = {
             'composition': Composition(),

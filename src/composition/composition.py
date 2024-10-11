@@ -1,19 +1,38 @@
-from src.components import Component
-from src.composition.action import Action
-
-from src.utils import stringify_tags
+from src.scene.component import Component
 
 
 class Composition(Component):
-    def __init__(self, data, seed):
-        super().__init__(data, seed)
-        self.action = Action(self.data["actions"], self.seed)
+
+    def __init__(self, seed):
+        super().__init__(seed)
+        self.data = self.load_data("config/composition.toml")
+
         self.components = {
-            'prefix': stringify_tags(self.data["prefix"]),
-            'camera': stringify_tags([
+            'prefix': self.select_tags(self.data["prefix"]),
+            'camera': self.stringify_tags([
                 self.select_tags(self.data["camera"]["angles"]),
                 self.select_tags(self.data["camera"]["framings"])
             ]),
             'protagonists': self.select_tags(self.data["protagonists"]),
-            'action': self.action
         }
+
+    def build_prompt(self):
+        protagonists = self.build_protagonists_prompt()
+
+        self.prompt = [
+            self.components["prefix"],
+            self.components["camera"],
+            protagonists
+        ]
+
+    def build_protagonists_prompt(self):
+
+        prompt = self.components["protagonists"]
+
+        match prompt:
+            case "1girl":
+                prompt = "1girl, solo"
+            case "1girl, 1boy":
+                prompt = "1girl, 1boy, solo focus"
+
+        return prompt

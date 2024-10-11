@@ -1,8 +1,12 @@
-from src.components import Component
-from src.utils import stringify_tags, is_true
+from src.scene.component import Component
+from src.utils import is_true
 
 
 class Eyes(Component):
+
+    def __init__(self, seed):
+        super().__init__(seed)
+        self.data = self.load_data("config/character.toml")["eyes"]
 
     def build_prompt(self):
         suffix = "eyes"
@@ -18,8 +22,8 @@ class Eyes(Component):
         p = eyewear["probability"]
 
         suffix = "eyewear"
-        type = self.select_tags(eyewear["types"])
-        color = self.select_tags(eyewear["colors"])
+        type = self.select_tags(eyewear["types"], p)
+        color = self.select_tags(eyewear["colors"], p)
         colored_element = self.select_tags(["framed", "tinted"])
 
         tags = [
@@ -27,5 +31,6 @@ class Eyes(Component):
             f"{color}-{colored_element} {suffix}",
         ]
 
-        eyewear_prompt = stringify_tags(tags) if is_true(self.seed, p) else ""
+        eyewear_prompt = self.stringify_tags(
+            tags) if is_true(self.seed, p) else ""
         return eyewear_prompt

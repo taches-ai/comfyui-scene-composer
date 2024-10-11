@@ -1,0 +1,13 @@
+time = ["day", "night", "dawn", "dusk", "sunset", "sunrise"]
+weather = ["sunny", "cloudy", "rainy", "snowy"]
+locations = [
+  "bedroom",
+  "living room",
+  "kitchen",
+  "bathroom",
+  "office",
+  "library",
+  "forest",
+  "mountain",
+  "beach",
+]

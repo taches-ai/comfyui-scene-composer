@@ -1,0 +1,50 @@
+[vest]
+colors = [
+  "aqua",
+  "black",
+  "blue",
+  "brown",
+  "green",
+  "grey",
+  "orange",
+  "pink",
+  "purple",
+  "red",
+  "white",
+  "yellow",
+]
+
+types = ["vest", "waistcoat"]
+[top]
+colors = [
+  "aqua",
+  "black",
+  "blue",
+  "brown",
+  "green",
+  "grey",
+  "orange",
+  "pink",
+  "purple",
+  "red",
+  "white",
+  "yellow",
+]
+
+types = ["shirt", "blouse", "sweater", "jacket", "coat"]
+[bottom]
+colors = [
+  "aqua",
+  "black",
+  "blue",
+  "brown",
+  "green",
+  "grey",
+  "orange",
+  "pink",
+  "purple",
+  "red",
+  "white",
+  "yellow",
+]
+types = ["pants", "shorts", "skirt"]

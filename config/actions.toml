@@ -1,0 +1,34 @@
+[normal]
+list = ["position", "gesture", "interaction", "activity"]
+position = ["standing", "sitting", "walking", "running"]
+gesture = ["waving", "pointing", "adjusting hair"]
+interaction = ["holding hand"]
+activity = ["drinking", "reading"]
+
+[sexual.preliminary]
+list = ["masturbation", "handjob", "paizuri", "fellatio"]
+masturbation = ["fingering"]
+handjob = ["handjob"]
+paizuri = ["paizuri"]
+fellatio = [
+  "fellatio",
+  "irrumatio",
+  "deepthroat",
+  "surprise deepthroat",
+  "licking penis",
+]
+
+[sexual.main]
+doggystyle = [
+  "doggystyle",
+  "top-down bottom-up",
+  "face down",
+  "prone bone",
+  "bent over",
+]
+cowgirl = ["girl on top"]
+standing-sex = ["standing sex"]
+piledriver = ["pilediver"]
+
+[sexual.finisher]
+cum = ["cum"]

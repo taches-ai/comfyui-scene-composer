@@ -1,0 +1,76 @@
+# BODY
+[body]
+types = ["petite", "slim", "athletic", "curvy", "muscular", "chubby", "fat"]
+colors = ["dark:2", "black", "red", "green", "blue", "purple", "pink"]
+
+[body.breasts]
+sizes = [
+  "flat chest",
+  "small breasts",
+  "medium breasts",
+  "large breasts",
+  "huge breasts",
+]
+nipples = ["nipples", "dark nipples", "puffy nipples"]
+
+[body.extras]
+probability = 0.9
+repeat = [1, 2]
+types = ["freckles:2", "tattoos", "piercings", "scars", "birthmarks", "moles"]
+
+# HAIR
+[hair]
+styles = ["ponytail", "bun", "braid", "pigtails"]
+
+colors = [
+  "black:2",
+  "brown:2",
+  "blonde:2",
+  "ginger:2",
+  "red",
+  "white",
+  "blue",
+  "aqua",
+  "green",
+  "grey",
+  "silver",
+  "pink",
+  "purple",
+]
+lengths = ["short", "medium", "long", "very long"]
+appearances = ["curly", "straight", "wavy"]
+
+# EYES & EYEWEAR
+[eyes]
+colors = [
+  "aqua",
+  "black",
+  "blue",
+  "brown",
+  "green",
+  "grey",
+  "orange",
+  "pink",
+  "purple",
+  "red",
+  "white",
+  "yellow",
+]
+
+[eyes.eyewears]
+probability = 0.3
+types = ["glasses", "sunglasses", "round glasses", "googles"]
+colors = [
+  "aqua",
+  "black",
+  "blue",
+  "brown",
+  "green",
+  "grey",
+  "orange",
+  "pink",
+  "purple",
+  "red",
+  "white",
+  "yellow",
+]

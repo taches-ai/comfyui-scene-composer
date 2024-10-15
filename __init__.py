@@ -5,11 +5,11 @@ from .src.subject.character import Character
 from .src.environment.environment import Environment
 
 NODE_CLASS_MAPPINGS = {
-    "Scene": Scene,
-    "Composition": Composition,
-    "Action": Action,
-    "Character": Character,
-    "Environment": Environment,
+    "🎞️ Scene": Scene,
+    "📹 Composition": Composition,
+    "🎬 Action": Action,
+    "👤 Character": Character,
+    "⛅️ Environment": Environment,
 }
 
 __all__ = ['NODE_CLASS_MAPPINGS']

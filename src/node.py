@@ -38,9 +38,9 @@ class Node:
 
     RETURN_TYPES = ("STRING",)
     FUNCTION = "build_node"
-    CATEGORY = "Scene Composer"
+    CATEGORY = "🎞️ Scene Composer"
 
-    def build_node(self, seed):
+    def run_node(self, seed):
         """Return the prompt according to node's seed"""
         self.update_seed(seed)
         prompt = self.get_prompt()
@@ -63,15 +63,6 @@ class Node:
         for component in self.components:
             if hasattr(self.components[component], "seed"):
                 self.components[component].seed = seed
-
-    def load_data(self, path):
-        """Load data from a TOML file"""
-        try:
-            with open(path) as file:
-                data = toml.load(file)
-        except Exception:
-            data = {}
-        return data
 
     def select_tags(self, tags, p=1, n=1,):
         """Return n tags from a string, list or dict"""
@@ -113,7 +104,8 @@ class Node:
         tags = self.stringify_tags(selected_tags)
         return tags
 
-    def parse_tag_distribution(self, tags):
+    @staticmethod
+    def parse_tag_distribution(tags):
         """Choose tags randomly according to defined weights
         If none are defined, tag weight is 1
         Example: "foo:1.5, bar:0.5" -> 75% chance of foo, 25% chance of bar"""
@@ -130,7 +122,18 @@ class Node:
         probabilities = np.array(weights) / sum(weights)
         return tag_names, probabilities
 
-    def stringify_tags(self, tags):
+    @staticmethod
+    def load_data(path):
+        """Load data from a TOML file"""
+        try:
+            with open(path) as file:
+                data = toml.load(file)
+        except Exception:
+            data = {}
+        return data
+
+    @staticmethod
+    def stringify_tags(tags):
         """Return a string from a list of tags"""
         tags = ", ".join(map(str, tags))
         tags = tags.replace(", ,", ",")

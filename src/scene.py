@@ -17,23 +17,11 @@ class Scene(Node):
             'environment': Environment(self.seed)
         }
 
-    def build_node(self, action_type, seed, **kwargs):
-        if action_type != "random":
-            self.components["action"].type = action_type
-
-        # Update components based on kwargs
-        for key, value in kwargs.items():
-            if key in self.components:
-                self.components[key] = value
-
-        super().build_node(seed)
-
     @classmethod
     def INPUT_TYPES(cls):
         inputs = super().INPUT_TYPES()
 
-        # Define action type
-        action_data = cls.components["action"].data
+        action_data = cls().components["action"].data
         action_list = action_data["normal"]["list"]
         action_list.insert(0, "random")
 
@@ -44,8 +32,27 @@ class Scene(Node):
         }
         inputs["required"] = required_inputs
 
-        # Add optional inputs
-        optional_components = {key: ("STRING", {"default": value})
-                               for key, value in cls.components.items()}
+        # Update the optional inputs
+        optional_components = {
+            key: ("STRING", {
+                "default": "",
+                "forceInput": True
+            })
+            for key in cls().components.keys()}
+
         inputs["optional"] = optional_components
         return inputs
+
+    def run_node(self, action_type, seed, **kwargs):
+
+        if action_type != "random":
+            self.components["action"].type = ["normal", action_type]
+
+        # Update components based on kwargs
+        for key, value in kwargs.items():
+            if key in self.components and value != "":
+                self.components[key] = value
+
+        self.update_seed(seed)
+        prompt = self.get_prompt()
+        return (prompt,)

@@ -8,7 +8,7 @@ from .clothes import Clothes
 
 class Character(Node):
 
-    CATEGORY = "Scene Composer/Components"
+    CATEGORY = Node.CATEGORY + "/Components"
 
     def build_prompt(self):
         self.components = {

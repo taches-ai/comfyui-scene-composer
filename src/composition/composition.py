@@ -6,7 +6,7 @@ class Composition(Node):
     def __init__(self, seed):
         super().__init__(seed, data_file="composition.toml")
 
-    CATEGORY = "Scene Composer/Components"
+    CATEGORY = Node.CATEGORY + "/Components"
 
     def build_prompt(self):
         super().build_prompt()
@@ -19,11 +19,13 @@ class Composition(Node):
         ])
 
         protagonists = self.data["protagonists"]
+        self.select_tags(protagonists)
         match protagonists:
-            case "1girl":
+            case ["1girl"]:
                 protagonists = "1girl, solo"
-            case "1girl, 1boy":
+            case ["1girl, 1boy"]:
                 protagonists = "1girl, 1boy, solo focus"
+        print(protagonists)
         protagonists = self.stringify_tags(protagonists)
 
         self.prompt = [prefix, camera, protagonists]

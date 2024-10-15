@@ -19,14 +19,32 @@ class Node:
         self.components = {}
         self.prompt = []
 
-    def load_data(self, path):
-        """Load data from a TOML file"""
-        try:
-            with open(path) as file:
-                data = toml.load(file)
-        except Exception:
-            data = {}
-        return data
+    @classmethod
+    def INPUT_TYPES(cls):
+        """ComfyUI node inputs"""
+        required = {
+            "seed": ("INT", {
+                "default": 0,
+                "min": 0,
+                "max": 0xffffffffffffffff
+            })
+        }
+        optional = {}
+        inputs = {
+            "required": required,
+            "optional": optional
+        }
+        return inputs
+
+    RETURN_TYPES = ("STRING",)
+    FUNCTION = "build_node"
+    CATEGORY = "Scene Composer"
+
+    def build_node(self, seed):
+        """Return the prompt according to node's seed"""
+        self.update_seed(seed)
+        prompt = self.get_prompt()
+        return (prompt,)
 
     def get_prompt(self):
         """Build the prompt and return it as a string"""
@@ -39,9 +57,24 @@ class Node:
         self.prompt = [self.components[component]
                        for component in self.components]
 
-    def select_tags(self, tags, p=1, n=1):
-        """Return n tags from a string, list or dict"""
+    def update_seed(self, seed):
+        """Update the seed of the node and its components"""
+        self.seed = seed
+        for component in self.components:
+            if hasattr(self.components[component], "seed"):
+                self.components[component].seed = seed
 
+    def load_data(self, path):
+        """Load data from a TOML file"""
+        try:
+            with open(path) as file:
+                data = toml.load(file)
+        except Exception:
+            data = {}
+        return data
+
+    def select_tags(self, tags, p=1, n=1,):
+        """Return n tags from a string, list or dict"""
         rng = np.random.default_rng(self.seed)
 
         if isinstance(tags, str):
@@ -105,31 +138,3 @@ class Node:
 
     def __str__(self):
         return self.get_prompt()
-
-    # COMFYUI specifics
-
-    @classmethod
-    def INPUT_TYPES(cls):
-        """ComfyUI node inputs"""
-        required = {
-            "seed": ("INT", {
-                "default": 0,
-                "min": 0,
-                "max": 0xffffffffffffffff
-            })
-        }
-        optional = {}
-        inputs = {
-            "required": required,
-            "optional": optional
-        }
-        return inputs
-
-    RETURN_TYPES = ("STRING",)
-    FUNCTION = "build_node"
-    CATEGORY = "Scene Composer"
-
-    def build_node(self, seed):
-        self.seed = seed
-        prompt = self.get_prompt()
-        return (prompt,)

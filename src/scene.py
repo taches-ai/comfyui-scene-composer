@@ -6,6 +6,7 @@ from .environment.environment import Environment
 
 
 class Scene(Node):
+
     def __init__(self, seed=0):
         super().__init__(seed)
 
@@ -16,5 +17,35 @@ class Scene(Node):
             'environment': Environment(self.seed)
         }
 
-    def define_action(self, action_type):
-        self.components['action'] = Action(type=action_type)
+    def build_node(self, action_type, seed, **kwargs):
+        if action_type != "random":
+            self.components["action"].type = action_type
+
+        # Update components based on kwargs
+        for key, value in kwargs.items():
+            if key in self.components:
+                self.components[key] = value
+
+        super().build_node(seed)
+
+    @classmethod
+    def INPUT_TYPES(cls):
+        inputs = super().INPUT_TYPES()
+
+        # Define action type
+        action_data = cls.components["action"].data
+        action_list = action_data["normal"]["list"]
+        action_list.insert(0, "random")
+
+        # Update the required inputs
+        required_inputs = {
+            "action_type": (action_list,),
+            "seed": inputs["required"]["seed"]
+        }
+        inputs["required"] = required_inputs
+
+        # Add optional inputs
+        optional_components = {key: ("STRING", {"default": value})
+                               for key, value in cls.components.items()}
+        inputs["optional"] = optional_components
+        return inputs

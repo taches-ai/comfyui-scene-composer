@@ -3,15 +3,13 @@ from ..node import Node
 
 class Clothes(Node):
 
-    def __init__(self, seed):
-        super().__init__(seed)
+    def build_prompt(self):
         self.components = {
             'vest': Piece(self.seed+1, "vest"),
             'top': Piece(self.seed+2, "top"),
             'bottom': Piece(self.seed+3, "bottom")
         }
 
-    def build_prompt(self):
         self.prompt = [
             self.components["vest"],
             self.components["top"],

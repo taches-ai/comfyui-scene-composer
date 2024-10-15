@@ -15,8 +15,8 @@ nipples = ["nipples", "dark nipples", "puffy nipples"]
 
 [body.extras]
 probability = 0.9
-repeat = [1, 2]
-types = ["freckles:2", "tattoos", "piercings", "scars", "birthmarks", "moles"]
+repeat = 2
+tags = ["freckles:2", "tattoos", "piercings", "scars", "birthmarks", "moles"]
 
 # HAIR
 [hair]

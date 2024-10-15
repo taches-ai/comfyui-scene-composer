@@ -1,12 +1,14 @@
 from ..node import Node
+from ..utils import get_nested_dict_value
 
 
 class Action(Node):
 
-    def __init__(self, seed, type="normal"):
+    def __init__(self, seed, type=["normal"]):
         super().__init__(seed, data_file="actions.toml")
         self.type = type
 
     def build_prompt(self):
-        action = self.select_tags(self.data)
+        data = get_nested_dict_value(self.data, self.type)
+        action = self.select_tags(data)
         self.prompt = [action]

@@ -13,15 +13,12 @@ class Body(Node):
         }
 
         type = self.select_tags(self.data["types"])
-        color = self.select_tags(self.data["colors"])
+        colors = self.select_tags(self.data["colors"])
+        color = f"{colors} skin" if colors else ""
+        breasts = self.components['breasts']
         extras = self.select_tags(self.data["extras"])
 
-        self.prompt = [
-            type,
-            f"{color} skin",
-            self.components["breasts"],
-            extras
-        ]
+        self.prompt = [type, color, breasts, extras]
 
 
 class Breasts(Node):
@@ -32,6 +29,8 @@ class Breasts(Node):
 
     def build_prompt(self):
         size = self.select_tags(self.data["sizes"])
-        nipples = self.select_tags(self.data["nipples"])
 
-        self.prompt = [size, nipples]
+        # TODO: Handle nipple display according to clothes state
+        # nipples = self.select_tags(self.data["nipples"])
+
+        self.prompt = [size]

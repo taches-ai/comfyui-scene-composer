@@ -1,50 +1,39 @@
-[vest]
+# State: how clothed the character is
+states = ["clothed", "underwear:0.5", "nude:0.5"]
+
+# Types: if clothed, what type of clothing
+types = ["casual", "dress", "swimsuit", "uniform"]
+
+# Colors apply for all piece of clothing
 colors = [
-  "aqua",
-  "black",
-  "blue",
-  "brown",
-  "green",
-  "grey",
-  "orange",
-  "pink",
-  "purple",
-  "red",
   "white",
+  "grey",
+  "black",
+  "brown",
+  "red",
+  "orange",
   "yellow",
+  "green",
+  "blue",
+  "aqua",
+  "purple",
+  "pink",
 ]
 
-types = ["vest", "waistcoat"]
-[top]
-colors = [
-  "aqua",
-  "black",
-  "blue",
-  "brown",
-  "green",
-  "grey",
-  "orange",
-  "pink",
-  "purple",
-  "red",
-  "white",
-  "yellow",
-]
+swimsuit = ["bikini", "one-piece swimsuit"]
+uniform = ["school", "sport", "military", "maid"]
 
-types = ["shirt", "blouse", "sweater", "jacket", "coat"]
-[bottom]
-colors = [
-  "aqua",
-  "black",
-  "blue",
-  "brown",
-  "green",
-  "grey",
-  "orange",
-  "pink",
-  "purple",
-  "red",
-  "white",
-  "yellow",
-]
-types = ["pants", "shorts", "skirt"]
+[casual]
+top = ["shirt", "blouse", "sweater", "hoodie"]
+bottom = ["jeans", "pants", "shorts", "skirt"]
+
+[casual.vest]
+probability = 0.3
+tags = ["vest", "coat", "trenchoat", "jacket"]
+
+[dress]
+length = ["short", "long"]
+
+[dress.style]
+probability = 0.5
+tags = ["off-shoulder", "backless"]

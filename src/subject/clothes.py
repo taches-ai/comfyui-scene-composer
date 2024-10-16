@@ -1,32 +1,90 @@
 from ..node import Node
 
+from ..utils import get_nested_dict_value
+
 
 class Clothes(Node):
 
-    def build_prompt(self):
-        self.components = {
-            'vest': Piece(self.seed+1, "vest"),
-            'top': Piece(self.seed+2, "top"),
-            'bottom': Piece(self.seed+3, "bottom")
-        }
+    def __init__(self, seed, state="random", type="random"):
+        super().__init__(seed, data_file="clothes.toml")
+        self.state = state
+        self.type = type
 
-        self.prompt = [
-            self.components["vest"],
-            self.components["top"],
-            self.components["bottom"]
-        ]
+    def build_prompt(self):
+        prompt = ""
+
+        if self.state == "random":
+            self.state = self.select_tags(self.data["states"])
+
+        if self.type == "random":
+            self.type = self.select_tags(self.data["types"])
+
+        match self.state:
+            case "clothed":
+                prompt = self.build_clothes()
+            case "underwear":
+                prompt = self.build_underwear()
+            case "nude":
+                prompt = ["nude"]
+
+        self.prompt = prompt
+
+    def build_clothes(self):
+        prompt = ""
+        match self.type:
+            case "casual":
+                vest = Piece(self, self.seed+1, ["casual", "vest"])
+                top = Piece(self, self.seed+2, ["casual", "top"])
+                bottom = Piece(self, self.seed+3, ["casual", "bottom"])
+                prompt = [vest, top, bottom]
+
+            case "dress":
+                suffix = "dress"
+                color = self.select_tags(self.data["colors"])
+                length = self.select_tags(self.data["dress"]["length"])
+                style = self.select_tags(self.data["dress"]["style"])
+                prompt = [
+                    f"{color} {suffix}",
+                    f"{length} {suffix}",
+                    f"{style} {suffix}"
+                ]
+
+            case "swimsuit":
+                color = self.select_tags(self.data["colors"])
+                type = self.select_tags(self.data["swimsuit"])
+                prompt = [f"{color} swimsuit, {type}"]
+
+            case "uniform":
+                color = self.select_tags(self.data["colors"])
+                type = self.select_tags(self.data["uniform"])
+                prompt = [f"{color} uniform, {type} uniform"]
+
+            case _:
+                color = self.select_tags(self.data["colors"])
+                type = self.select_tags(self.data[self.type])
+                prompt = [f"{color} {type}"]
+        return prompt
+
+    def build_underwear(self):
+        color = self.select_tags(self.data["colors"])
+        prompt = [f"{color} bra", f"{color} panties"]
+        return prompt
 
 
 class Piece(Node):
+    """Return a colored piece of clothing"""
 
-    def __init__(self, seed, type):
-        super().__init__(seed, data_file="clothes.toml")
-        self.data = self.data[type]
+    def __init__(self, cls, seed, type):
+        super().__init__(seed)
+        self.data = cls.data
+        self.seed = seed
+        self.type = get_nested_dict_value(self.data, type)
 
     def build_prompt(self):
-        type = self.select_tags(self.data["types"])
         color = self.select_tags(self.data["colors"])
+        type = self.select_tags(self.type)
 
-        self.prompt = [
-            f"{color} {type}",
-        ]
+        self.prompt = [f"{color} {type}"]
+
+        if type == "":
+            self.prompt = []

@@ -37,7 +37,7 @@ class Node:
         return inputs
 
     RETURN_TYPES = ("STRING",)
-    FUNCTION = "build_node"
+    FUNCTION = "run_node"
     CATEGORY = "🎞️ Scene Composer"
 
     def run_node(self, seed):
@@ -76,6 +76,8 @@ class Node:
             p = tags.get("probability", p)
             n = tags.get("repeat", n)
 
+            # TODO: list is just an extra unnecessary step
+            # Remove it and chose directly among the defined properties
             if "list" in tags:
                 selected_from_list = self.select_tags(tags["list"], p, n)
                 tags = tags[selected_from_list]

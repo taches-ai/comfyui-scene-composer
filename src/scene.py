@@ -20,8 +20,8 @@ class Scene(Node):
     @classmethod
     def INPUT_TYPES(cls):
         inputs = super().INPUT_TYPES()
-
-        action_data = cls().components["action"].data
+        components = cls().components
+        action_data = components["action"].data
         action_list = action_data["normal"]["list"]
         action_list.insert(0, "random")
 
@@ -38,7 +38,7 @@ class Scene(Node):
                 "default": "",
                 "forceInput": True
             })
-            for key in cls().components.keys()}
+            for key in components.keys()}
 
         inputs["optional"] = optional_components
         return inputs

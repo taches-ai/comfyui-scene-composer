@@ -4,7 +4,7 @@ from ..utils import get_nested_dict_value
 
 class Action(Node):
 
-    def __init__(self, seed, type=["normal"]):
+    def __init__(self, seed=0, type=["normal"]):
         super().__init__(seed, data_file="actions.toml")
         self.type = type
 
@@ -14,19 +14,22 @@ class Action(Node):
     def INPUT_TYPES(cls):
         inputs = super().INPUT_TYPES()
 
-        action_data = cls().components["action"].data
-        action_list = action_data.keys()
+        seed = inputs["required"]["seed"]
+        action_data = cls(seed).data
+        action_list = list(action_data.keys())
         action_list.insert(0, "random")
 
         # Update the required inputs
         required_inputs = {
             "action_type": (action_list,),
-            "seed": inputs["required"]["seed"]
+            "seed": seed
         }
         inputs["required"] = required_inputs
         return inputs
 
-    def run_node(self, action_type):
+    def run_node(self, action_type, seed):
+
+        self.update_seed(seed)
 
         if action_type == "random":
             action_type = self.select_tags(self.data)

@@ -11,19 +11,23 @@ class Composition(Node):
     @classmethod
     def INPUT_TYPES(cls):
         inputs = super().INPUT_TYPES()
+        data = cls.load_data(cls.data_path)
 
-        seed = inputs["required"]["seed"]
-        composition_data = cls(seed).data
-        prefix = composition_data["prefix"]
-        protagonists = list(composition_data["protagonists"])
-        protagonists.insert(0, "random")
+        prefix = data["prefix"]
+        protagonists = list("random", data["protagonists"])
+        camera_framings = list("random", data["camera"]["framings"])
+        camera_angles = list("random", data["camera"]["angles"])
 
         # Update the required inputs
         required_inputs = {
             "prefix": ("STRING", {"default": prefix, "multiline": True}),
             "protagonists": (protagonists,),
-            "seed": seed
+            "camera_framings": (camera_framings,),
+            "camera_angles": (camera_angles,),
+            "seed": inputs["required"]["seed"]
         }
+
+        # Update the inputs
         inputs["required"] = required_inputs
         return inputs
 

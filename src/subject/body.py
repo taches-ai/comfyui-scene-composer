@@ -5,32 +5,35 @@ class Body(Node):
 
     def __init__(self, seed):
         super().__init__(seed, data_file="character.toml")
-        self.data = self.data["body"]
 
-    def build_prompt(self):
-        self.components = {
-            'breasts': Breasts(self.seed)
-        }
-
-        type = self.select_tags(self.data["types"])
-        colors = self.select_tags(self.data["colors"])
+    def build_components(self):
+        data = self.data["body"]
+        type = self.select_tags(data["types"])
+        colors = self.select_tags(data["colors"])
         color = f"{colors} skin" if colors else ""
-        breasts = self.components['breasts']
-        extras = self.select_tags(self.data["extras"])
+        breasts = Breasts(self.seed)
+        extras = self.select_tags(data["extras"])
 
-        self.prompt = [type, color, breasts, extras]
+        self.components = {
+            "type": type,
+            "color": color,
+            "breasts": breasts,
+            "extras": extras
+        }
 
 
 class Breasts(Node):
 
     def __init__(self, seed):
         super().__init__(seed, data_file="character.toml")
-        self.data = self.data["body"]["breasts"]
 
-    def build_prompt(self):
-        size = self.select_tags(self.data["sizes"])
+    def build_components(self):
+        data = self.data["body"]["breasts"]
+        size = self.select_tags(data["sizes"])
 
         # TODO: Handle nipple display according to clothes state
         # nipples = self.select_tags(self.data["nipples"])
 
-        self.prompt = [size]
+        self.components = {
+            "size": size
+        }

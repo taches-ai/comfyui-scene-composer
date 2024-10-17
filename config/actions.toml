@@ -1,24 +1,12 @@
 [normal]
-list = ["position", "gesture", "interaction", "activity"]
 position = ["standing", "sitting", "walking", "running"]
 gesture = ["waving", "pointing", "adjusting hair"]
 interaction = ["holding hand"]
 activity = ["drinking", "reading"]
 
-[sexual]
-hide_male = false
-penis_size = ["small:0.5", "normal", "large", "huge:0.5"]
-testicles_size = ["small:0.5", "normal", "large", "huge:0.5"]
-
-[sexual.fluids]
-sweat = 1
-cum = 1
-pussy_juice = 1
-
-[sexual.intercourses]
+[nsfw]
 list = ["preliminary", "main"]
 preliminary = ["fingering", "handjob", "fellatio", "licking penis", "paizuri"]
-insertion = ["vaginal", "anal"]
 main = [
   "doggystyle",
   "cowgirl",
@@ -27,3 +15,12 @@ main = [
   "suspended congress",
   "full nelson",
 ]
+
+[nsfw.settings]
+hide_male = false
+penis_size = ["small:0.5", "normal", "large", "huge:0.5"]
+testicles_size = ["small:0.5", "normal", "large", "huge:0.5"]
+insertion = ["vaginal", "anal"]
+sweat = 1
+cum = 1
+pussy_juice = 1

@@ -1,7 +1,7 @@
 import numpy as np
 import toml
 
-from .utils import ROOT_DIR
+from .utils import ROOT_DIR, get_nested_dict_value
 
 
 class Node:
@@ -11,12 +11,11 @@ class Node:
 
     def __init__(self, seed=0, data_file=""):
         self.seed = seed
-
-        self.data_file = data_file
-        self.data_path = f"{ROOT_DIR}/config/{self.data_file}"
-        self.data = self.load_data(self.data_path)
+        self.data = self.load_data(data_file)
 
         self.components = {}
+        self.build_components()
+
         self.prompt = []
 
     @classmethod
@@ -40,8 +39,18 @@ class Node:
     FUNCTION = "run_node"
     CATEGORY = "🎞️ Scene Composer"
 
-    def run_node(self, seed):
-        """Return the prompt according to node's seed"""
+    def run_node(self, seed, **kwargs):
+        """ComfyUI node function
+        Will change the data before building the components"""
+
+        # Update data based on node inputs
+        # If it's "random", keep the previous value:
+        # it will be chosen randomly by the build_components method
+        for arg, value in kwargs.items():
+            if value != "random":
+                output = get_nested_dict_value(value)
+            self.data[arg] = output
+
         self.update_seed(seed)
         prompt = self.get_prompt()
         return (prompt,)
@@ -54,8 +63,12 @@ class Node:
 
     def build_prompt(self):
         """Build the prompt according to the components"""
+        self.build_components()
         self.prompt = [self.components[component]
                        for component in self.components]
+
+    def build_components(self):
+        pass
 
     def update_seed(self, seed):
         """Update the seed of the node and its components"""
@@ -64,9 +77,10 @@ class Node:
             if hasattr(self.components[component], "seed"):
                 self.components[component].seed = seed
 
-    def select_tags(self, tags, p=1, n=1,):
+    def select_tags(self, tags, p=1, n=1, seed=None):
         """Return n tags from a string, list or dict"""
-        rng = np.random.default_rng(self.seed)
+        seed = seed or self.seed
+        rng = np.random.default_rng(seed)
 
         if isinstance(tags, str):
             return tags
@@ -125,8 +139,9 @@ class Node:
         return tag_names, probabilities
 
     @staticmethod
-    def load_data(path):
+    def load_data(filename):
         """Load data from a TOML file"""
+        path = f"{ROOT_DIR}/config/{filename}"
         try:
             with open(path) as file:
                 data = toml.load(file)
@@ -137,10 +152,12 @@ class Node:
     @staticmethod
     def build_inputs_list(data):
         """Build a list with a random option"""
-        inputs_list = list("random" + data)
+        data = [tag.split(':')[0] for tag in data]
+        inputs_list = ["random"] + data
+
         return inputs_list
 
-    @ staticmethod
+    @staticmethod
     def stringify_tags(tags):
         """Return a string from a list of tags"""
         tags = ", ".join(map(str, tags))

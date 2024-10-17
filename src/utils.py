@@ -11,13 +11,23 @@ def is_true(seed, p=0.5):
 
 
 def get_nested_dict_value(data, keys):
-    """Get a nested value from a dictionary defined by a list of keys."""
+    """Get a nested value from a dictionary
+    List: ['parent', 'child']
+    String: 'parent.child' or 'parent_child'
+    """
+
     if isinstance(keys, str):
+        if '.' in keys or '_' in keys:
+            separators = ['.', '_']
+            for sep in separators:
+                if sep in keys:
+                    keys = keys.split(sep)
+                    break
         return keys
 
     for key in keys:
         if isinstance(data, dict):
             data = data.get(key, key)
-        else:
-            return key
+        return key
+
     return data

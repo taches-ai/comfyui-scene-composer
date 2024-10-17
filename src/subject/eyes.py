@@ -6,17 +6,17 @@ class Eyes(Node):
 
     def __init__(self, seed):
         super().__init__(seed, data_file="character.toml")
-        self.data = self.data["eyes"]
 
-    def build_prompt(self):
+    def build_components(self):
+        data = self.data["eyes"]
         suffix = "eyes"
-        color = self.select_tags(self.data["colors"])
-        eyewear = self.build_eyewear_prompt(self.data["eyewears"])
+        color = self.select_tags(data["colors"])
+        eyewear = self.build_eyewear_prompt(data["eyewears"])
 
-        self.prompt = [
-            f"{color} {suffix}",
-            eyewear
-        ]
+        self.components = {
+            "color": f"{color} {suffix}",
+            "eyewear": eyewear
+        }
 
     def build_eyewear_prompt(self, eyewear):
         p = eyewear["probability"]

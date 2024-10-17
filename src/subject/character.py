@@ -10,12 +10,10 @@ class Character(Node):
 
     CATEGORY = Node.CATEGORY + "/Components"
 
-    def build_prompt(self):
+    def build_components(self):
         self.components = {
             'body': Body(self.seed),
             'hair': Hair(self.seed),
             'eyes': Eyes(self.seed),
             'clothes': Clothes(self.seed)
         }
-
-        super().build_prompt()

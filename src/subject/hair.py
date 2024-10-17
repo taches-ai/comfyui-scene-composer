@@ -5,17 +5,17 @@ class Hair(Node):
 
     def __init__(self, seed):
         super().__init__(seed, data_file="character.toml")
-        self.data = self.data["hair"]
 
-    def build_prompt(self):
+    def build_components(self):
+        data = self.data["hair"]
         suffix = "hair"
 
-        color = self.select_tags(self.data["colors"])
-        length = self.select_tags(self.data["lengths"])
-        style = self.select_tags(self.data["styles"])
+        color = self.select_tags(data["colors"])
+        length = self.select_tags(data["lengths"])
+        style = self.select_tags(data["styles"])
 
-        self.prompt = [
-            f"{color} {suffix}",
-            f"{length} {suffix}",
-            style
-        ]
+        self.components = {
+            "color": f"{color} {suffix}",
+            "length": f"{length} {suffix}",
+            "style": style
+        }

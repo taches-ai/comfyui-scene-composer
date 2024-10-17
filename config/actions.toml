@@ -5,31 +5,25 @@ gesture = ["waving", "pointing", "adjusting hair"]
 interaction = ["holding hand"]
 activity = ["drinking", "reading"]
 
-[preliminary]
-list = ["masturbation", "handjob", "paizuri", "fellatio"]
-masturbation = ["fingering"]
-handjob = ["handjob"]
-paizuri = ["paizuri"]
-fellatio = [
-  "fellatio",
-  "irrumatio",
-  "deepthroat",
-  "surprise deepthroat",
-  "licking penis",
-]
+[sexual]
+hide_male = false
+penis_size = ["small:0.5", "normal", "large", "huge:0.5"]
+testicles_size = ["small:0.5", "normal", "large", "huge:0.5"]
 
-[main]
-list = ["doggystyle", "cowgirl", "standing-sex", "piledriver"]
-doggystyle = [
+[sexual.fluids]
+sweat = 1
+cum = 1
+pussy_juice = 1
+
+[sexual.intercourses]
+list = ["preliminary", "main"]
+preliminary = ["fingering", "handjob", "fellatio", "licking penis", "paizuri"]
+insertion = ["vaginal", "anal"]
+main = [
   "doggystyle",
-  "top-down bottom-up",
-  "face down",
-  "prone bone",
-  "bent over",
+  "cowgirl",
+  "reversed cowgirl",
+  "piledriver",
+  "suspended congress",
+  "full nelson",
 ]
-cowgirl = ["girl on top"]
-standing-sex = ["standing sex"]
-piledriver = ["pilediver"]
-
-[finisher]
-cum = ["cum"]

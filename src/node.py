@@ -135,6 +135,12 @@ class Node:
         return data
 
     @staticmethod
+    def build_inputs_list(data):
+        """Build a list with a random option"""
+        inputs_list = list("random" + data)
+        return inputs_list
+
+    @ staticmethod
     def stringify_tags(tags):
         """Return a string from a list of tags"""
         tags = ", ".join(map(str, tags))

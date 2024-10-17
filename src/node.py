@@ -48,7 +48,7 @@ class Node:
         # it will be chosen randomly by the build_components method
         for arg, value in kwargs.items():
             if value != "random":
-                output = get_nested_dict_value(value)
+                output = get_nested_dict_value(self.data, value)
             self.data[arg] = output
 
         self.update_seed(seed)

@@ -15,13 +15,14 @@ $ pip install -r requirements.txt
 
 ### Scene
 
-The Scene node generates a procedural random prompt as a string. The prompt follows the CASE structure:
+The Scene node generates a procedural random prompt as a string. The prompt follows the following structure:
 
 | Component       | Description                                                   |
 | --------------- | ------------------------------------------------------------- |
 | **C**omposition | The layout of the scene, cameras, number of protagonists, etc |
-| **A**ctions     | Activites done by the subject/protagonist(s)                  |
-| **S**ubject     | Main character, including appearance, clothes, attitude, etc  |
+| **A**ctions     | Activites done by the character/protagonist(s)                |
+| **C**haracter   | Main character, focusing on body type and faces, etc          |
+| **C**lothes     | Include casual clothes, uniforms, swimsuits, underwear, etc   |
 | **E**nvironment | The setting, including background, weather, time of day, etc  |
 
 You can define some aspects of the scene directly in the node. If you want to have more control over what's generated, you can override these components by passing a string as input. This work particularly well with the node components, which are explained just below.

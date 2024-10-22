@@ -62,11 +62,12 @@ class Scene(Node):
 
     def build_prompt(self, seed, nsfw, **kwargs):
 
+        components = self.components
         prompt = []
 
         # NSFW case
         if nsfw:
-            self.components["action"] = {
+            components["action"] = {
                 "default": ActionNSFW(),
                 "action": 'random',
             }
@@ -74,20 +75,23 @@ class Scene(Node):
         # Build each component's prompt
         # If the component is in the kwargs, use it
         # Otherwise, use a default component
-        for component, args in self.components.items():
+        for component_name, component_data in components.items():
 
             tags = ""
 
-            if component in kwargs:
-                tags = kwargs[component] + ", "
+            if component_name in kwargs.keys():
+                tags = kwargs[component_name] + ", "
 
-            if "default" in args:
-                default = args.pop("default")
+            if "default" in component_data:
+                default = component_data["default"]
+                args = component_data.copy()
+                args.pop("default")
                 tags = default.build_prompt(seed, **args)[0]
 
             prompt.append(tags)
 
         # Clean up prompt
+        # Seperate tags with commas and remove trailing commas
         prompt = self.stringify_tags(prompt)
         if prompt.startswith(", "):
             prompt = prompt[2:]

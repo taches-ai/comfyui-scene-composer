@@ -1,20 +1,6 @@
 [normal]
-position = ["standing", "sitting", "walking", "running"]
-gesture = ["waving", "pointing", "adjusting hair"]
-interaction = ["holding hand"]
-activity = ["drinking", "reading"]
-
-[nsfw]
-list = ["preliminary", "main"]
-preliminary = ["fingering", "handjob", "fellatio", "licking penis", "paizuri"]
-main = [
-  "doggystyle",
-  "cowgirl",
-  "reversed cowgirl",
-  "piledriver",
-  "suspended congress",
-  "full nelson",
-]
+position = ["standing", "sitting", "walking", "running", "lying"]
+action = ["waving", "adjusting hair", "holding hand", "drinking", "reading"]
 
 [nsfw.settings]
 hide_male = false
@@ -24,3 +10,15 @@ insertion = ["vaginal", "anal"]
 sweat = 1
 cum = 1
 pussy_juice = 1
+
+[nsfw.actions]
+teasing = ["flashing"]
+preliminary = ["fingering", "handjob", "fellatio", "licking penis", "paizuri"]
+position = [
+  "doggystyle",
+  "cowgirl",
+  "reversed cowgirl",
+  "piledriver",
+  "suspended congress",
+  "full nelson",
+]

@@ -5,12 +5,12 @@ from ..utils import get_nested_dict_value
 
 class Clothes(Node):
 
-    def __init__(self, seed, state="random", type="random"):
+    def __init__(self, seed=0, state="random", type="random"):
         self.state = state
         self.type = type
         super().__init__(seed, data_file="clothes.toml")
 
-    def build_components(self):
+    def build_prompt(self, seed):
         prompt = ""
 
         if self.state == "random":
@@ -27,10 +27,7 @@ class Clothes(Node):
             case "nude":
                 prompt = "nude"
 
-        # TODO: Expand components
-        self.components = {
-            'clothes': prompt
-        }
+        return (prompt,)
 
     def build_clothes(self):
         prompt = ""
@@ -81,7 +78,7 @@ class Piece(Node):
         self.seed = seed
         self.type = get_nested_dict_value(self.data, type)
 
-    def build_components(self):
+    def build_prompt(self):
         color = self.select_tags(self.data["colors"])
         type = self.select_tags(self.type)
         piece = f"{color} {type}"
@@ -89,6 +86,5 @@ class Piece(Node):
         if type == "":
             piece = ""
 
-        self.components = {
-            "piece": piece
-        }
+        prompt = f"{piece}"
+        return (prompt,)

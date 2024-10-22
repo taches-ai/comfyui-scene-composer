@@ -1,7 +1,7 @@
 import numpy as np
 import toml
 
-from .utils import ROOT_DIR, get_nested_dict_value
+from .utils import ROOT_DIR
 
 
 class Node:
@@ -13,14 +13,9 @@ class Node:
         self.seed = seed
         self.data = self.load_data(data_file)
 
-        self.components = {}
-        self.build_components()
-
-        self.prompt = []
-
     @classmethod
     def INPUT_TYPES(cls):
-        """ComfyUI node inputs"""
+        """ComfyUI node's inputs"""
         required = {
             "seed": ("INT", {
                 "default": 0,
@@ -36,51 +31,18 @@ class Node:
         return inputs
 
     RETURN_TYPES = ("STRING",)
-    FUNCTION = "run_node"
+    FUNCTION = "build_prompt"
     CATEGORY = "🎞️ Scene Composer"
 
-    def run_node(self, seed, **kwargs):
-        """ComfyUI node function
-        Will change the data before building the components"""
-
-        # Update data based on node inputs
-        # If it's "random", keep the previous value:
-        # it will be chosen randomly by the build_components method
-        for arg, value in kwargs.items():
-            if value != "random":
-                output = get_nested_dict_value(self.data, value)
-            self.data[arg] = output
-
-        self.update_seed(seed)
-        prompt = self.get_prompt()
-        return (prompt,)
-
-    def get_prompt(self):
-        """Build the prompt and return it as a string"""
-        self.build_prompt()
-        prompt = self.stringify_tags(self.prompt)
-        return prompt
-
     def build_prompt(self):
-        """Build the prompt according to the components"""
-        self.build_components()
-        self.prompt = [self.components[component]
-                       for component in self.components]
-
-    def build_components(self):
         pass
 
-    def update_seed(self, seed):
-        """Update the seed of the node and its components"""
-        self.seed = seed
-        for component in self.components:
-            if hasattr(self.components[component], "seed"):
-                self.components[component].seed = seed
-
-    def select_tags(self, tags, p=1, n=1, seed=None):
+    def select_tags(self, tags, p=1, n=1, selected="random"):
         """Return n tags from a string, list or dict"""
-        seed = seed or self.seed
-        rng = np.random.default_rng(seed)
+        rng = np.random.default_rng(self.seed)
+
+        if selected != "random":
+            return selected
 
         if isinstance(tags, str):
             return tags
@@ -164,5 +126,5 @@ class Node:
         tags = tags.replace(", ,", ",")
         return tags
 
-    def __str__(self):
-        return self.get_prompt()
+    def __str__(self, **kwargs):
+        return self.build_prompt(**kwargs)[0]

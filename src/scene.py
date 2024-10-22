@@ -41,7 +41,7 @@ class Scene(Node):
         inputs = super().INPUT_TYPES()
         seed = inputs["required"]["seed"]
 
-        components = cls.components
+        components = cls().components
 
         inputs["required"] = {
             "nsfw": ("BOOLEAN", {"default": False}),

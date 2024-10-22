@@ -13,9 +13,9 @@ class Composition(Node):
         data = cls(seed).data
 
         prefix = data["prefix"]
-        protagonists = cls.build_inputs_list(data["protagonists"])
-        camera_framings = cls.build_inputs_list(data["camera"]["framings"])
-        camera_angles = cls.build_inputs_list(data["camera"]["angles"])
+        protagonists = cls().build_inputs_list(data["protagonists"])
+        camera_framings = cls().build_inputs_list(data["camera"]["framings"])
+        camera_angles = cls().build_inputs_list(data["camera"]["angles"])
 
         inputs["required"] = {
             "prefix": ("STRING", {"default": prefix, "multiline": True}),
@@ -30,7 +30,6 @@ class Composition(Node):
                      camera_framing, camera_angle):
 
         self.seed = seed
-        print(self.seed)
 
         components = {
             "prefix": {

@@ -74,7 +74,7 @@ class Piece(Node):
 
     def __init__(self, cls, seed, type):
         super().__init__(seed)
-        self.data = cls.data
+        self.data = cls().data
         self.seed = seed
         self.type = get_nested_dict_value(self.data, type)
 

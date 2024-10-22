@@ -10,10 +10,10 @@ class Action(Node):
     def INPUT_TYPES(cls):
         inputs = super().INPUT_TYPES()
         seed = inputs["required"]["seed"]
-        data = cls.data["normal"]
+        data = cls().data["normal"]
 
-        position = cls.build_inputs_list(data["position"])
-        action = cls.build_inputs_list(data["action"])
+        position = cls().build_inputs_list(data["position"])
+        action = cls().build_inputs_list(data["action"])
 
         # Update the required inputs
         inputs["required"] = {

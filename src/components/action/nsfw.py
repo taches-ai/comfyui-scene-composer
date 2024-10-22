@@ -10,8 +10,8 @@ class ActionNSFW(Node):
     def INPUT_TYPES(cls):
         inputs = super().INPUT_TYPES()
         seed = inputs["required"]["seed"]
-        data = cls.data["nsfw"]
-        actions = cls.build_inputs_list(data["actions"].keys())
+        data = cls().data["nsfw"]
+        actions = cls().build_inputs_list(data["actions"].keys())
 
         # Update the required inputs
         inputs["required"] = {

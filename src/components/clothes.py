@@ -11,6 +11,7 @@ class Clothes(Node):
         super().__init__(seed, data_file="clothes.toml")
 
     def build_prompt(self, seed):
+        self.seed = seed
         prompt = ""
 
         if self.state == "random":

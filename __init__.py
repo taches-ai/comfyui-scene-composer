@@ -10,7 +10,7 @@ NODE_CLASS_MAPPINGS = {
     "🎞️ Scene": Scene,
     "📹 Composition": Composition,
     "🎬 Action": Action,
-    "🔞 Action NSFW": ActionNSFW,
+    "🔞 Action (NSFW)": ActionNSFW,
     "👤 Character": Character,
     "👕 Clothes": Clothes,
     "⛅️ Environment": Environment,

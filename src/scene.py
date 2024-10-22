@@ -76,9 +76,12 @@ class Scene(Node):
         # Otherwise, use a default component
         for component, args in self.components.items():
 
+            tags = ""
+
             if component in kwargs:
                 tags = kwargs[component] + ", "
-            else:
+
+            if "default" in args:
                 default = args.pop("default")
                 tags = default.build_prompt(seed, **args)[0]
 

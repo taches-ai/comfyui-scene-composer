@@ -48,9 +48,8 @@ function widgetLogic(node, widget) {
 }
 
 function handleSceneNsfw(node, widget) {
-    const nsfwWidget = findWidgetByName(node, 'nsfw')
     const cumStrengthWidget = findWidgetByName(node, `cum_strength`);
-    if (nsfwWidget.value == true) {       
+    if (widget.value == true) {       
         toggleWidget(node, cumStrengthWidget, true);
     } else {
         toggleWidget(node, cumStrengthWidget);

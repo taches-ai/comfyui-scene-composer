@@ -92,12 +92,12 @@ class Node:
     def parse_tag_distribution(tags):
         """Choose tags randomly according to defined weights
         If none are defined, tag weight is 1
-        Example: "foo:1.5, bar:0.5" -> 75% chance of foo, 25% chance of bar"""
+        Example: "foo?1.5, bar?0.5" -> 75% chance of foo, 25% chance of bar"""
         tag_names = []
         weights = []
         for tag in tags:
-            if ':' in tag:
-                tag_name, weight = tag.split(':')
+            if '?' in tag:
+                tag_name, weight = tag.split('?')
                 tag_names.append(tag_name)
                 weights.append(float(weight))
             else:
@@ -120,7 +120,7 @@ class Node:
     @staticmethod
     def build_inputs_list(data):
         """Build a list with a random option"""
-        data = [tag.split(':')[0] for tag in data]
+        data = [tag.split('?')[0] for tag in data]
         inputs_list = ["random"] + data
 
         return inputs_list

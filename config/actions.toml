@@ -4,8 +4,8 @@ action = ["waving", "adjusting hair", "holding hand", "drinking", "reading"]
 
 [nsfw.settings]
 hide_male = false
-penis_size = ["small:0.5", "normal", "large", "huge:0.5"]
-testicles_size = ["small:0.5", "normal", "large", "huge:0.5"]
+penis_size = ["small?0.5", "", "large", "huge?0.5"]
+testicles_size = ["small?0.5", "", "large", "huge?0.5"]
 insertion = ["vaginal", "anal"]
 sweat = 1
 cum = 1

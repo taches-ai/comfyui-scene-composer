@@ -48,10 +48,10 @@ tags = ["foo", "bar"] # -> bar
 
 ### Weighted lists
 
-You can change the distribution by assigning a `:weight` next to the tag. By default, every tag has a weight of 1.
+You can change the distribution by assigning a `?weight` next to the tag. By default, every tag has a weight of 1.
 
 ```toml
-tags = ["foo:2", "bar", "baz"]
+tags = ["foo?2", "bar", "baz"]
 ```
 
 In this example, `foo` has a 50% chance to be chosen over `bar` or `baz`. This is because its weight is 2x the sum of all weights:
@@ -61,7 +61,7 @@ $\cfrac{\text{foo}}{\text{foo+bar+baz}} = \cfrac{2}{2+1+1}=0.5$
 You can of course add fractions to the weights to make it _less_ likely to be chosen.
 
 ```toml
-tags = ["foo:0.5", "bar", "baz"]
+tags = ["foo?0.5", "bar", "baz"]
 ```
 
 In this example, `foo` has a 20% chance to be chosen over `bar` or `baz`.

@@ -10,7 +10,7 @@ const doesInputWithNameExist = (node, name) => {
     return node.inputs ? node.inputs.some((input) => input.name === name) : false;
 };
 
-const HIDDEN_TAG = "tschide";
+const HIDDEN_TAG = "cschide";
 // Toggle Widget + change size
 function toggleWidget(node, widget, show = false, suffix = "") {
     if (!widget || doesInputWithNameExist(node, widget.name)) return;

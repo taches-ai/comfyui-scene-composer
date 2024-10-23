@@ -69,7 +69,7 @@ class Scene(Node):
         if nsfw:
             components["action"] = {
                 "default": ActionNSFW(),
-                "action": 'random',
+                "action_type": 'random',
             }
 
         # Build each component's prompt

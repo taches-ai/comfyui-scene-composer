@@ -16,4 +16,6 @@ NODE_CLASS_MAPPINGS = {
     "⛅️ Environment": Environment,
 }
 
+WEB_DIRECTORY = "js"
+
 __all__ = ['NODE_CLASS_MAPPINGS']

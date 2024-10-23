@@ -49,6 +49,9 @@ class ActionNSFW(Node):
     def enhance_prompt(self, data, action_type, settings):
 
         action = action_type
+        if action_type in data:
+            action = self.select_tags(data[action_type])
+
         penis, pussy = self.build_sex_parts(settings)
         sweat = "sweat"
 

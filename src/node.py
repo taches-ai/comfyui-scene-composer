@@ -44,22 +44,13 @@ class Node:
         if selected != "random":
             return selected
 
-        if isinstance(tags, str):
-            return tags
-
         if isinstance(tags, dict):
 
             p = tags.get("probability", p)
             n = tags.get("repeat", n)
 
-            # TODO: list is just an extra unnecessary step
-            # Remove it and chose directly among the defined properties
-            if "list" in tags:
-                selected_from_list = self.select_tags(tags["list"], p, n)
-                tags = tags[selected_from_list]
-
-            if "tags" in tags:
-                tags = tags.get("tags", [])
+            if rng.random() > p:
+                return ""
 
             # If n is a list, choose a random number between the 2 first values
             if isinstance(n, list):
@@ -67,19 +58,34 @@ class Node:
                 max_n = min(n[1], len(tags))
                 n = rng.integers(int(min_n), int(max_n))
 
-            if rng.random() > p:
-                return ""
+            # Handle "list" and "tags" special keys
+            if "list" in tags:
+                selected_from_list = self.select_tags(tags["list"], p, n)
+                tags = tags[selected_from_list]
 
-        tag_names, weights = self.parse_tag_distribution(tags)
+            elif "tags" in tags:
+                tags = tags.get("tags", [])
 
-        selected_tags = rng.choice(
-            tag_names,
-            size=n,
-            replace=False,
-            p=weights
-        )
+            # Handle recursive tags
+            else:
+                first_level_keys = list(tags.keys())
+                chosen_key = rng.choice(first_level_keys)
+                chosen_value = tags[chosen_key]
 
-        tags = self.stringify_tags(selected_tags)
+                if isinstance(chosen_value, (list, dict)):
+                    tags = self.select_tags(chosen_value, p, n)
+
+        if isinstance(tags, list):
+            tag_names, weights = self.parse_tag_distribution(tags)
+
+            selected_tags = rng.choice(
+                tag_names,
+                size=n,
+                replace=False,
+                p=weights
+            )
+            tags = self.stringify_tags(selected_tags)
+
         return tags
 
     @staticmethod

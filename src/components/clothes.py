@@ -1,7 +1,5 @@
 from ..node import Node
 
-from ..utils import get_nested_dict_value
-
 
 class Clothes(Node):
 
@@ -34,10 +32,10 @@ class Clothes(Node):
         prompt = ""
         match self.type:
             case "casual":
-                vest = Piece(self, self.seed+1, ["casual", "vest"])
-                top = Piece(self, self.seed+2, ["casual", "top"])
-                bottom = Piece(self, self.seed+3, ["casual", "bottom"])
-                prompt = [vest, top, bottom]
+                vest = Piece(self.data, self.seed+1, "vest")
+                top = Piece(self.data, self.seed+2, "top")
+                bottom = Piece(self.data, self.seed+3, "bottom")
+                prompt = f"{vest}, {top}, {bottom}"
 
             case "dress":
                 suffix = "dress"
@@ -73,19 +71,22 @@ class Clothes(Node):
 class Piece(Node):
     """Return a colored piece of clothing"""
 
-    def __init__(self, cls, seed, type):
+    def __init__(self, data, seed, type):
         super().__init__(seed)
-        self.data = cls().data
+        self.data = data
         self.seed = seed
-        self.type = get_nested_dict_value(self.data, type)
+        self.type = type
 
     def build_prompt(self):
         color = self.select_tags(self.data["colors"])
-        type = self.select_tags(self.type)
+        type = self.select_tags(self.data["casual"][self.type])
         piece = f"{color} {type}"
 
         if type == "":
             piece = ""
 
         prompt = f"{piece}"
-        return (prompt,)
+        return prompt
+
+    def __str__(self):
+        return self.build_prompt()

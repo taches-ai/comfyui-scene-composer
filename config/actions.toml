@@ -1,16 +1,25 @@
+# NORMAL
 [normal]
 position = ["standing", "sitting", "walking", "running", "lying"]
 action = ["waving", "adjusting hair", "holding hand", "drinking", "reading"]
 
+# NSFW
+
+# NSFW Settings
 [nsfw.settings]
+
+# General
 hide_male = false
 penis_size = ["small?0.5", "", "large", "huge?0.5"]
 testicles_size = ["small?0.5", "", "large", "huge?0.5"]
 insertion = ["vaginal", "anal"]
+
+# Intensity level (between 0 and 3)
 sweat = 1
 cum = 1
 pussy_juice = 1
 
+# NSFW Actions
 [nsfw.actions]
 teasing = ["flashing"]
 preliminary = ["fingering", "handjob", "fellatio", "licking penis", "paizuri"]

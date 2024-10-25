@@ -78,16 +78,16 @@ function handleSceneNsfw(node, widget) {
     toggleWidget(node, w, true);
   }
 
-  // Change act list according to the selected act_type
-  // Keep "random" value
   const actTypeWidget = findWidgetByName(node, `act_type`);
   const actType = actTypeWidget.value;
   const actWidget = findWidgetByName(node, `act`);
   const acts = actWidget.options.values;
 
-  actWidget.options.values = acts.filter(act =>
-    act.startsWith(`${actType}_` || "random")
-  );
+  // Change act list according to the selected act_type
+  // Keep "random" value
+  actWidget.options.values = acts
+    .filter(act => act.startsWith(`${actType}_`) || act === "random")
+    .map(act => (act === "random" ? act : act.replace(`${actType}_`, "")));
 }
 
 app.registerExtension({

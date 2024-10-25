@@ -18,9 +18,13 @@ class Action(Node):
         act_types = cls().build_inputs_list(data["nsfw"]["acts"].keys())
         act_types = data["nsfw"]["acts"].keys()
         acts = []
+
+        # Create the act list with act_type as prefix
+        # Will be filtered according to the act_type by the front-end
         for act_type in data["nsfw"]["acts"]:
             for act in data["nsfw"]["acts"][act_type]:
                 acts.extend([f"{act_type}_{act}"])
+        acts = cls().build_inputs_list(acts)
 
         # Update the required inputs
         inputs["required"] = {

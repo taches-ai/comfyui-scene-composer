@@ -6,36 +6,60 @@ class ActionNSFW(Node):
 
     def __init__(self, seed=0):
         super().__init__(seed, data_file="actions.toml")
-        self.data = self.data["nsfw"]
 
     @classmethod
     def INPUT_TYPES(cls):
         inputs = super().INPUT_TYPES()
         seed = inputs["required"]["seed"]
         data = cls().data
-        actions = cls().build_inputs_list(data["actions"].keys())
+        position = cls().build_inputs_list(data["normal"]["position"])
+        actions = cls().build_inputs_list(data["nsfw"]["actions"].keys())
 
         # Update the required inputs
         inputs["required"] = {
+            "nsfw": ("BOOLEAN", {"default": False}),
+            # SFW inputs
+            "position": (position,),
+            # NSFW inputs
             "action_type": (actions,),
-            "seed": seed,
+            "seed": seed
         }
 
         return inputs
 
-    def build_prompt(self, seed, action_type):
+    def build_prompt(self, nsfw, position, action_type, seed):
 
         self.seed = seed
+        prompt = ""
+
+        if nsfw:
+            prompt = self.handle_nsfw_scene(action_type)
+        else:
+            prompt = self.handle_sfw_scene(position)
+
+        return (prompt,)
+
+    def handle_sfw_scene(self, position):
+        data = self.data["normal"]
+        position = self.select_tags(
+            tags=data["position"],
+            selected=position
+        )
+        prompt = f"{position}"
+        return prompt
+
+    def handle_nsfw_scene(self, action_type):
+        data = self.data["nsfw"]
 
         # Handle random action case
         action = self.select_tags(
-            tags=self.data["actions"],
+            tags=data["actions"],
             selected=action_type
         )
 
-        settings = self.apply_settings(self.data["settings"])
-        prompt = self.enhance_prompt(self.data["actions"], action, settings)
-        return (prompt,)
+        settings = self.apply_settings(data["settings"])
+        prompt = self.enhance_prompt(data["actions"], action, settings)
+        return prompt
 
     def apply_settings(self, data):
 

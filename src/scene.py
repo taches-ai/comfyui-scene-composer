@@ -45,8 +45,7 @@ class Scene(Node):
 
         inputs["required"] = {
             "nsfw": ("BOOLEAN", {"default": False}),
-            "seed": seed,
-            "cum_strength": ("FLOAT", {"default": 0.0})
+            "seed": seed
         }
 
         # Add the components as optional inputs

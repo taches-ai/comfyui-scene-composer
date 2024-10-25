@@ -18,9 +18,9 @@ class Action(Node):
         act_types = cls().build_inputs_list(data["nsfw"]["acts"].keys())
         act_types = data["nsfw"]["acts"].keys()
         acts = []
-        for key in data["nsfw"]["acts"]:
-            acts.extend(f"{key}_{data['nsfw']['acts'][key]}")
-        acts = cls().build_inputs_list(acts)
+        for act_type in data["nsfw"]["acts"]:
+            for act in data["nsfw"]["acts"][act_type]:
+                acts.extend([f"{act_type}_{act}"])
 
         # Update the required inputs
         inputs["required"] = {

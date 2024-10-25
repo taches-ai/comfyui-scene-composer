@@ -1,6 +1,6 @@
 from .node import Node
 from .components.composition import Composition
-from .components.action.action import Action
+# from .components.action.action import Action
 from .components.action.nsfw import ActionNSFW
 from .components.character.character import Character
 from .components.clothes import Clothes
@@ -21,9 +21,11 @@ class Scene(Node):
                 "camera_angle": 'random'
             },
             "action": {
-                "default": Action(),
-                "position": 'random',
-                "action": 'random'
+                "default": ActionNSFW(),
+                "nsfw": False,
+                "position": "random",
+                "gesture": "random",
+                "act_type": "random"
             },
             "character": {
                 "default": Character(),
@@ -44,7 +46,6 @@ class Scene(Node):
         components = cls().components
 
         inputs["required"] = {
-            "nsfw": ("BOOLEAN", {"default": False}),
             "seed": seed
         }
 
@@ -60,17 +61,9 @@ class Scene(Node):
 
         return inputs
 
-    def build_prompt(self, seed, nsfw, **kwargs):
-
+    def build_prompt(self, seed, **kwargs):
         components = self.components
         prompt = []
-
-        # NSFW case
-        if nsfw:
-            components["action"] = {
-                "default": ActionNSFW(),
-                "action_type": 'random',
-            }
 
         # Build each component's prompt
         # If the component is in the kwargs, use it

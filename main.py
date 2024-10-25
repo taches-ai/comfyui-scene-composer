@@ -9,7 +9,7 @@ def main(seed, nsfw):
         seed = random.randint(0, 0xffffffffffffffff)
 
     scene = Scene()
-    output = scene.build_prompt(seed, nsfw)
+    output = scene.build_prompt(seed)
 
     print(f"SEED: {seed}")
     print(f"TAGS: {output}")

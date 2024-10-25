@@ -56,11 +56,12 @@ function widgetLogic(node, widget) {
 // Show SFW/NSFW widgets according to the value of the "nsfw" widget
 function handleSceneNsfw(node, widget) {
   const isNsfw = widget.value;
-  const positionWidget = findWidgetByName(node, `position`);
-  const actionWidget = findWidgetByName(node, `action_type`);
 
-  const sfwWidgets = [positionWidget];
-  const nsfwWidgets = [actionWidget];
+  const sfwWidgets = [
+    findWidgetByName(node, `position`),
+    findWidgetByName(node, `gesture`),
+  ];
+  const nsfwWidgets = [findWidgetByName(node, `act_type`)];
 
   const allWidgets = [...sfwWidgets, ...nsfwWidgets];
 

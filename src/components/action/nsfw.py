@@ -12,53 +12,63 @@ class ActionNSFW(Node):
         inputs = super().INPUT_TYPES()
         seed = inputs["required"]["seed"]
         data = cls().data
-        position = cls().build_inputs_list(data["normal"]["position"])
-        actions = cls().build_inputs_list(data["nsfw"]["actions"].keys())
+
+        positions = cls().build_inputs_list(data["sfw"]["positions"])
+        gestures = cls().build_inputs_list(data["sfw"]["gestures"])
+        act_types = cls().build_inputs_list(data["nsfw"]["acts"].keys())
 
         # Update the required inputs
         inputs["required"] = {
             "nsfw": ("BOOLEAN", {"default": False}),
             # SFW inputs
-            "position": (position,),
+            "position": (positions,),
+            "gesture": (gestures,),
             # NSFW inputs
-            "action_type": (actions,),
+            "act_type": (act_types,),
             "seed": seed
         }
 
         return inputs
 
-    def build_prompt(self, nsfw, position, action_type, seed):
+    def build_prompt(self, seed, nsfw, position, gesture, act_type):
 
         self.seed = seed
         prompt = ""
 
         if nsfw:
-            prompt = self.handle_nsfw_scene(action_type)
+            prompt = self.handle_nsfw_scene(act_type)
         else:
-            prompt = self.handle_sfw_scene(position)
+            prompt = self.handle_sfw_scene(position, gesture)
 
         return (prompt,)
 
-    def handle_sfw_scene(self, position):
-        data = self.data["normal"]
+    def handle_sfw_scene(self, position, gesture):
+        data = self.data["sfw"]
+
         position = self.select_tags(
-            tags=data["position"],
+            tags=data["positions"],
             selected=position
         )
-        prompt = f"{position}"
+
+        gesture = self.select_tags(
+            tags=data["gestures"],
+            selected=gesture
+        )
+
+        prompt = f"{position}, {gesture}"
         return prompt
 
-    def handle_nsfw_scene(self, action_type):
+    def handle_nsfw_scene(self, act_type):
         data = self.data["nsfw"]
 
         # Handle random action case
         action = self.select_tags(
-            tags=data["actions"],
-            selected=action_type
+            tags=data["acts"],
+            selected=act_type
         )
 
         settings = self.apply_settings(data["settings"])
-        prompt = self.enhance_prompt(data["actions"], action, settings)
+        prompt = self.enhance_prompt(data["acts"], action, settings)
         return prompt
 
     def apply_settings(self, data):
@@ -70,44 +80,44 @@ class ActionNSFW(Node):
 
         return settings
 
-    def enhance_prompt(self, data, action_type, settings):
+    def enhance_prompt(self, data, act_type, settings):
 
-        action = action_type
-        if action_type in data:
-            action = self.select_tags(data[action_type])
+        act = act_type
+        if act_type in data:
+            act = self.select_tags(data[act_type])
 
         penis, pussy = self.build_sex_parts(settings)
         sweat = "sweat"
 
-        # Enhance position
-        if action_type in data["position"]:
-            insertion = self.select_tags(settings["insertion"])
-            action += f", {insertion}"
+        # Enhance act
+        if act_type in data["intercourses"]:
+            insertion = self.select_tags(settings["insertions"])
+            act += f", {insertion}"
 
         # Enhance preliminary
-        if action_type in data["preliminary"]:
-            if "fingering" in action_type:
+        if act_type in data["preliminaries"]:
+            if "fingering" in act_type:
                 penis = ""
                 if is_true(self.seed, 0.5):
-                    action += ", fingering from behind"
+                    act += ", fingering from behind"
             else:
                 pussy = ""
 
         # Enhance teasing
-        if "flashing" in action_type:
+        if "flashing" in act_type:
             # TODO: Add random body part flashing
             penis = ""
             pussy = ""
-            action += ", nipples, clothes lift"
+            act += ", nipples, clothes lift"
 
-        components = [action, penis, pussy, sweat]
-        action = self.stringify_tags(components)
-        return action
+        components = [act, penis, pussy, sweat]
+        act = self.stringify_tags(components)
+        return act
 
     def build_sex_parts(self, settings):
 
         # Penis
-        penis = f"{settings['penis_size']} penis"
+        penis = f"{settings['penis_sizes']} penis"
 
         if settings["hide_male"]:
             penis += ", disembodied penis"
@@ -115,7 +125,7 @@ class ActionNSFW(Node):
         # Testicles
         testicles = ""
         if is_true(self.seed, 0.3):
-            testicles = f"{settings['testicles_size']} testicles"
+            testicles = f"{settings['testicles_sizes']} testicles"
 
         # Pussy
         pussy = "pussy"

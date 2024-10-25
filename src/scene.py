@@ -22,10 +22,11 @@ class Scene(Node):
             },
             "action": {
                 "default": Action(),
-                "nsfw": False,
+                "nsfw": True,
                 "position": "random",
                 "gesture": "random",
-                "act_type": "random"
+                "act_type": "random",
+                "act": "random"
             },
             "character": {
                 "default": Character(),

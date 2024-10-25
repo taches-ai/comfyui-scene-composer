@@ -16,33 +16,37 @@ class Action(Node):
         positions = cls().build_inputs_list(data["sfw"]["positions"])
         gestures = cls().build_inputs_list(data["sfw"]["gestures"])
         act_types = cls().build_inputs_list(data["nsfw"]["acts"].keys())
+        act_types = data["nsfw"]["acts"].keys()
+        acts = []
+        for key in data["nsfw"]["acts"]:
+            acts.extend(f"{key}_{data['nsfw']['acts'][key]}")
+        acts = cls().build_inputs_list(acts)
 
         # Update the required inputs
         inputs["required"] = {
             "nsfw": ("BOOLEAN", {"default": False}),
-            # SFW inputs
             "position": (positions,),
             "gesture": (gestures,),
-            # NSFW inputs
             "act_type": (act_types,),
             "seed": seed
         }
 
         return inputs
 
-    def build_prompt(self, seed, nsfw, position, gesture, act_type):
+    def build_prompt(self, seed, nsfw, position, gesture, act_type, act):
 
         self.seed = seed
         prompt = ""
 
         if nsfw:
-            prompt = self.handle_nsfw_scene(act_type)
+            prompt = self.build_nsfw_action(act_type, act)
         else:
-            prompt = self.handle_sfw_scene(position, gesture)
+            prompt = self.build_sfw_action(position, gesture)
 
         return (prompt,)
 
-    def handle_sfw_scene(self, position, gesture):
+    def build_sfw_action(self, position, gesture):
+        """Build a safe-for-work action prompt"""
         data = self.data["sfw"]
 
         position = self.select_tags(
@@ -58,21 +62,27 @@ class Action(Node):
         prompt = f"{position}, {gesture}"
         return prompt
 
-    def handle_nsfw_scene(self, act_type):
+    def build_nsfw_action(self, act_type, act):
+        """Build a not-safe-for-work action prompt"""
         data = self.data["nsfw"]
 
-        # Handle random action case
-        action = self.select_tags(
+        act_type = self.select_tags(
             tags=data["acts"],
-            selected=act_type
+            selected=act_type,
+            recursive=False
+        )
+
+        act = self.select_tags(
+            tags=data["acts"][act_type],
+            selected=act
         )
 
         settings = self.apply_settings(data["settings"])
-        prompt = self.enhance_prompt(data["acts"], action, settings)
+        prompt = self.enhance_prompt(data["acts"], act, settings)
         return prompt
 
     def apply_settings(self, data):
-
+        """Apply NSFW settings"""
         settings = {}
 
         for key, value in data.items():
@@ -81,6 +91,8 @@ class Action(Node):
         return settings
 
     def enhance_prompt(self, data, act_type, settings):
+        """Enhance the NSFW action.
+        Add or remove tags depending on the action type"""
 
         act = act_type
         if act_type in data:
@@ -115,6 +127,7 @@ class Action(Node):
         return act
 
     def build_sex_parts(self, settings):
+        """Build sex parts, including penis, testicles, pussy, etc."""
 
         # Penis
         penis = f"{settings['penis_sizes']} penis"

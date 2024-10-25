@@ -61,10 +61,14 @@ function handleSceneNsfw(node, widget) {
     findWidgetByName(node, `position`),
     findWidgetByName(node, `gesture`),
   ];
-  const nsfwWidgets = [findWidgetByName(node, `act_type`)];
+  const nsfwWidgets = [
+    findWidgetByName(node, `act_type`),
+    findWidgetByName(node, `act`),
+  ];
 
   const allWidgets = [...sfwWidgets, ...nsfwWidgets];
 
+  // Hide and show widgets
   for (const w of allWidgets) {
     toggleWidget(node, w, false);
   }
@@ -73,6 +77,17 @@ function handleSceneNsfw(node, widget) {
   for (const w of widgetsToToggle) {
     toggleWidget(node, w, true);
   }
+
+  // Change act list according to the selected act_type
+  // Keep "random" value
+  const actTypeWidget = findWidgetByName(node, `act_type`);
+  const actType = actTypeWidget.value;
+  const actWidget = findWidgetByName(node, `act`);
+  const acts = actWidget.options.values;
+
+  actWidget.options.values = acts.filter(act =>
+    act.startsWith(`${actType}_` || "random")
+  );
 }
 
 app.registerExtension({

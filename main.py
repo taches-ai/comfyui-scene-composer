@@ -9,6 +9,7 @@ def main(seed, nsfw):
         seed = random.randint(0, 0xffffffffffffffff)
 
     scene = Scene()
+    scene.components["action"]["default"].INPUT_TYPES()
     output = scene.build_prompt(seed)
 
     print(f"SEED: {seed}")

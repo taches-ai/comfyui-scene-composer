@@ -1,7 +1,7 @@
 from .node import Node
 from .components.composition import Composition
 # from .components.action.action import Action
-from .components.action.nsfw import ActionNSFW
+from .components.action import Action
 from .components.character.character import Character
 from .components.clothes import Clothes
 from .components.environment import Environment
@@ -21,7 +21,7 @@ class Scene(Node):
                 "camera_angle": 'random'
             },
             "action": {
-                "default": ActionNSFW(),
+                "default": Action(),
                 "nsfw": False,
                 "position": "random",
                 "gesture": "random",

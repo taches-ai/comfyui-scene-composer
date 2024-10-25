@@ -39,7 +39,7 @@ function toggleWidget(node, widget, show = false, suffix = "") {
 
 // Create a map of node titles to their respective widget handlers
 const nodeWidgetHandlers = {
-  "🔞 Action (NSFW)": {
+  "🎬 Action": {
     nsfw: handleSceneNsfw,
   },
 };

@@ -1,8 +1,8 @@
-from ...node import Node
-from ...utils import is_true
+from ..node import Node
+from ..utils import is_true
 
 
-class ActionNSFW(Node):
+class Action(Node):
 
     def __init__(self, seed=0):
         super().__init__(seed, data_file="actions.toml")

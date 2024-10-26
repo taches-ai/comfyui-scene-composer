@@ -149,8 +149,5 @@ app.registerExtension({
         },
       });
     }
-    setTimeout(() => {
-      initialized = true;
-    }, 500);
   },
 });

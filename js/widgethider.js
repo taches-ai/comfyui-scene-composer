@@ -77,12 +77,14 @@ function handleSceneNsfw(node, widget) {
     toggleWidget(node, w, true);
   }
 
-  // Dynamic act list based on the selected act_type
-  const actWidget = findWidgetByName(node, `act`);
-  const actTypeWidget = findWidgetByName(node, `act_type`);
-  filterInputList(node, actWidget, actTypeWidget);
-  actTypeWidget.callback = () =>
+  if (isNsfw) {
+    // Dynamic act list based on the selected act_type
+    const actWidget = findWidgetByName(node, `act`);
+    const actTypeWidget = findWidgetByName(node, `act_type`);
     filterInputList(node, actWidget, actTypeWidget);
+    actTypeWidget.callback = () =>
+      filterInputList(node, actWidget, actTypeWidget);
+  }
 }
 
 function filterInputList(node, actWidget, actTypeWidget) {

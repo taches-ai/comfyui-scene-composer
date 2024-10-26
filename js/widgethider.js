@@ -80,11 +80,12 @@ function handleSceneNsfw(node, widget) {
   // Dynamic act list based on the selected act_type
   const actWidget = findWidgetByName(node, `act`);
   const actTypeWidget = findWidgetByName(node, `act_type`);
-
-  actTypeWidget.callback = () => filterInputList(actWidget, actTypeWidget);
+  filterInputList(node, actWidget, actTypeWidget);
+  actTypeWidget.callback = () =>
+    filterInputList(node, actWidget, actTypeWidget);
 }
 
-function filterInputList(actWidget, actTypeWidget) {
+function filterInputList(node, actWidget, actTypeWidget) {
   // Restore original value
   if (origProps[actWidget.name].originalValues) {
     actWidget.options.values = origProps[actWidget.name].originalValues;
@@ -95,9 +96,16 @@ function filterInputList(actWidget, actTypeWidget) {
     origProps[actWidget.name].originalValues = [...actWidget.options.values];
   }
 
+  // Hide act widget if act_type is random
+  toggleWidget(node, actWidget, actTypeWidget.value !== "random");
+
+  // Filter the act list based on the selected act_type
   actWidget.options.values = actWidget.options.values
     .filter(act => act.startsWith(`${actTypeWidget.value}_`) || act == "random")
     .map(act => act.replace(`${actTypeWidget.value}_`, ""));
+
+  // Set the value to the first act in the list
+  actWidget.value = actWidget.options.values[0];
 }
 
 app.registerExtension({

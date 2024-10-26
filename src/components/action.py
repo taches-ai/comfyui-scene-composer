@@ -21,6 +21,8 @@ class Action(Node):
         # (This will be filtered by the front-end, according to the act_type)
         acts = []
         for act_type in act_types:
+            if act_type == "random":
+                continue
             # If act_type is not in the list, select a random one
             if act_type not in data["nsfw"]["acts"]:
                 act_type = cls().select_tags(

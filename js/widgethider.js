@@ -56,7 +56,6 @@ function widgetLogic(node, widget) {
 // Show SFW/NSFW widgets according to the value of the "nsfw" widget
 function handleSceneNsfw(node, widget) {
   const isNsfw = widget.value;
-
   const sfwWidgets = [
     findWidgetByName(node, `position`),
     findWidgetByName(node, `gesture`),
@@ -65,29 +64,40 @@ function handleSceneNsfw(node, widget) {
     findWidgetByName(node, `act_type`),
     findWidgetByName(node, `act`),
   ];
-
   const allWidgets = [...sfwWidgets, ...nsfwWidgets];
 
-  // Hide and show widgets
+  // Hide all widgets
   for (const w of allWidgets) {
     toggleWidget(node, w, false);
   }
 
+  // Show the appropriate SFW/NSFW widgets
   const widgetsToToggle = isNsfw ? nsfwWidgets : sfwWidgets;
   for (const w of widgetsToToggle) {
     toggleWidget(node, w, true);
   }
 
-  const actTypeWidget = findWidgetByName(node, `act_type`);
-  const actType = actTypeWidget.value;
+  // Dynamic act list based on the selected act_type
   const actWidget = findWidgetByName(node, `act`);
-  const acts = actWidget.options.values;
+  const actTypeWidget = findWidgetByName(node, `act_type`);
 
-  // Change act list according to the selected act_type
-  // Keep "random" value
-  actWidget.options.values = acts
-    .filter(act => act.startsWith(`${actType}_`) || act === "random")
-    .map(act => (act === "random" ? act : act.replace(`${actType}_`, "")));
+  actTypeWidget.callback = () => filterInputList(actWidget, actTypeWidget);
+}
+
+function filterInputList(actWidget, actTypeWidget) {
+  // Restore original value
+  if (origProps[actWidget.name].originalValues) {
+    actWidget.options.values = origProps[actWidget.name].originalValues;
+  }
+
+  // Store original values before filtering
+  if (origProps[actWidget.name]) {
+    origProps[actWidget.name].originalValues = [...actWidget.options.values];
+  }
+
+  actWidget.options.values = actWidget.options.values
+    .filter(act => act.startsWith(`${actTypeWidget.value}_`) || act == "random")
+    .map(act => act.replace(`${actTypeWidget.value}_`, ""));
 }
 
 app.registerExtension({

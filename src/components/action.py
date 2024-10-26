@@ -16,12 +16,18 @@ class Action(Node):
         positions = cls().build_inputs_list(data["sfw"]["positions"])
         gestures = cls().build_inputs_list(data["sfw"]["gestures"])
         act_types = cls().build_inputs_list(data["nsfw"]["acts"].keys())
-        act_types = data["nsfw"]["acts"].keys()
-        acts = []
 
-        # Create the act list with act_type as prefix
-        # Will be filtered according to the act_type by the front-end
-        for act_type in data["nsfw"]["acts"]:
+        # Add act_type as prefix to each act in the list
+        # (This will be filtered by the front-end, according to the act_type)
+        acts = []
+        for act_type in act_types:
+            # If act_type is not in the list, select a random one
+            if act_type not in data["nsfw"]["acts"]:
+                act_type = cls().select_tags(
+                    tags=data["nsfw"]["acts"],
+                    selected=act_type,
+                    recursive=False
+                )
             for act in data["nsfw"]["acts"][act_type]:
                 acts.extend([f"{act_type}_{act}"])
         acts = cls().build_inputs_list(acts)
@@ -32,6 +38,7 @@ class Action(Node):
             "position": (positions,),
             "gesture": (gestures,),
             "act_type": (act_types,),
+            "act": (acts,),
             "seed": seed
         }
 
